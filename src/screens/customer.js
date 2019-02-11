@@ -45,7 +45,7 @@ class CustomerScreen extends Component {
             textContentType="telephoneNumber"
             style={{
               height: 50,
-              width: 350,
+              width: 320,
               backgroundColor: "white",
               fontSize: 15,
               paddingLeft: 10
@@ -53,7 +53,7 @@ class CustomerScreen extends Component {
           />
           <TouchableHighlight
             style={styles.submit}
-            onPress={() => this.props.navigation.navigate("Home")}
+            onPress={() => alert("Clicked")}
             underlayColor="#fff"
           >
             <Text style={styles.submitText}>Search Customer</Text>
@@ -63,7 +63,7 @@ class CustomerScreen extends Component {
             placeholder="Name"
             placeholderTextColor="#ADD8E6"
             style={{
-              width: 350,
+              width: 320,
               backgroundColor: "white",
               fontSize: 15,
               paddingLeft: 10,
@@ -78,7 +78,7 @@ class CustomerScreen extends Component {
             numberOfLines={4}
             style={{
               height: 100,
-              width: 350,
+              width: 320,
               backgroundColor: "white",
               fontSize: 15,
               paddingLeft: 10,
@@ -88,7 +88,7 @@ class CustomerScreen extends Component {
         </View>
         <TouchableHighlight
           style={styles.search}
-          onPress={() => this.props.navigation.navigate("Home")}
+          onPress={() => this.props.navigation.navigate("NoOfPax")}
           underlayColor="#fff"
         >
           <Text style={styles.submitText}>Continue Order</Text>
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "#fff",
-    width: 350,
+    width: 320,
     height: 50
   },
   search: {
@@ -127,13 +127,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "#fff",
-    width: 350,
+    width: 320,
     height: 50
   },
   submitText: {
     color: "#fff",
     textAlign: "center",
-    paddingTop: 5
+    paddingTop: 5,
+    fontSize: 18
   }
 });
 
