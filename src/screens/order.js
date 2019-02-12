@@ -631,10 +631,10 @@ class OrderScreen extends Component {
         <View>
           <TouchableHighlight
             style={styles.search}
-            onPress={() => this.props.navigation.navigate("NoOfPax")}
+            onPress={() => this.props.navigation.navigate("CurrentOrder")}
             underlayColor="#fff"
           >
-            <Text style={styles.submitText}>Continue Order</Text>
+            <Text style={styles.submitText}>View Order</Text>
           </TouchableHighlight>
         </View>
       </ImageBackground>

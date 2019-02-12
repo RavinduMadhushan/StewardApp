@@ -23,6 +23,7 @@ import CustomerScreen from "./src/screens/customer";
 import NoOfPaxScreen from "./src/screens/no-of-pax";
 import CategoriesScreen from "./src/screens/categories";
 import OrderScreen from "./src/screens/order";
+import CurrentOrder from "./src/screens/currentorder";
 
 export default class App extends Component {
   componentDidMount() {
@@ -46,7 +47,8 @@ const MainNavigator = createStackNavigator(
     Customer: CustomerScreen,
     NoOfPax: NoOfPaxScreen,
     Categories: CategoriesScreen,
-    Order: OrderScreen
+    Order: OrderScreen,
+    CurrentOrder: CurrentOrder
   },
   {
     initialRouteName: "Login"
