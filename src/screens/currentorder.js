@@ -1,21 +1,17 @@
 import React, { Component } from "react";
 import {
   View,
-  ImageBackground,
-  Image,
-  Button,
-  TextInput,
-  ScrollView,
   Text,
-  TouchableOpacity,
-  StyleSheet,
+  ImageBackground,
   TouchableHighlight,
-  StatusBar
+  Image,
+  StyleSheet,
+  ScrollView
 } from "react-native";
 
-class OrderListScreen extends Component {
+class CurrentOrderScreen extends Component {
   static navigationOptions = {
-    title: "Order List",
+    title: "Order",
     headerTintColor: "white",
     headerRight: (
       <Image
@@ -32,7 +28,6 @@ class OrderListScreen extends Component {
       backgroundColor: "#ff9800"
     }
   };
-  state = {};
   render() {
     return (
       <ImageBackground
@@ -42,47 +37,35 @@ class OrderListScreen extends Component {
           height: "100%"
         }}
       >
-        <View
-          style={{ flex: 1, flexDirection: "column", alignItems: "stretch" }}
-        >
+        <View style={{ flex: 1, flexDirection: "column" }}>
           <View
             style={{
-              backgroundColor: "white",
-              flexDirection: "row",
-              width: 320,
-              marginTop: 10,
-              height: 40,
-              alignSelf: "center",
-              marginBottom: 10
+              height: 50,
+              backgroundColor: "rgba(255, 255, 255, 0.8)"
             }}
           >
-            <TextInput
+            <Text
               style={{
-                height: 40,
-                flex: 1,
-                flexDirection: "row",
-                paddingLeft: 20
+                color: "black",
+                paddingTop: 11,
+                fontSize: 22,
+                paddingLeft: 5
               }}
-              placeholder="Search"
-              placeholderTextColor="#ADD8E6"
-            />
-            <TouchableHighlight
-              title="Press"
-              style={{ paddingRight: 7, paddingTop: 5 }}
-              activeOpacity={0.9}
             >
-              <Image
-                style={{ width: 30, height: 30 }}
-                source={require("../images/search.png")}
-              />
-            </TouchableHighlight>
+              Current Order
+            </Text>
           </View>
           <ScrollView>
-            <View style={{ flexDirection: "column" }}>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: "column"
+              }}
+            >
               <View style={{ flexDirection: "column" }}>
                 <View
                   style={{
-                    height: 95,
+                    height: 75,
                     borderColor: "grey",
                     borderWidth: 1,
                     flexDirection: "row",
@@ -94,72 +77,42 @@ class OrderListScreen extends Component {
                     <Text
                       style={{
                         color: "white",
-                        fontSize: 14,
-                        paddingTop: 8,
-                        paddingLeft: 10
+                        fontSize: 24,
+                        paddingTop: 10,
+                        paddingLeft: 20
                       }}
                     >
-                      1100/07/2145
+                      14550
                     </Text>
                     <Text
                       style={{
                         color: "white",
-                        fontSize: 18,
-                        paddingTop: 1,
-                        paddingLeft: 10
+                        fontSize: 15,
+                        paddingTop: 3,
+                        paddingLeft: 20
                       }}
                     >
-                      Table: 07
-                    </Text>
-                    <Text
-                      style={{
-                        color: "yellow",
-                        fontSize: 14,
-                        paddingTop: 1,
-                        paddingLeft: 10
-                      }}
-                    >
-                      Pax: 03
-                    </Text>
-                    <Text
-                      style={{
-                        color: "yellow",
-                        fontSize: 12,
-                        paddingTop: 1,
-                        paddingLeft: 10
-                      }}
-                    >
-                      Order time: 12.35 pm
+                      Tomato Bazil Soup
                     </Text>
                   </View>
                   <View style={{ flex: 1, flexDirection: "column" }}>
                     <Text
                       style={{
                         color: "yellow",
-                        fontSize: 14,
-                        paddingTop: 8,
-                        paddingLeft: 1
+                        fontSize: 15,
+                        paddingTop: 30,
+                        paddingLeft: 20
                       }}
                     >
-                      Status: On Preparation
-                    </Text>
-                    <Text
-                      style={{
-                        color: "white",
-                        fontSize: 14,
-                        paddingTop: 8,
-                        paddingLeft: 1
-                      }}
-                    >
-                      Steward: SHANTHA
+                      Regular
                     </Text>
                   </View>
                   <TouchableHighlight
-                    style={{ paddingRight: 15, paddingTop: 32 }}
+                    style={{ paddingRight: 15, paddingTop: 22 }}
                   >
                     <Image
-                      style={{ width: 20, height: 20 }}
-                      source={require("../images/right.png")}
+                      style={{ width: 22, height: 22 }}
+                      source={require("../images/trash.png")}
                     />
                   </TouchableHighlight>
                 </View>
@@ -230,7 +183,7 @@ class OrderListScreen extends Component {
               <View style={{ flexDirection: "column" }}>
                 <View
                   style={{
-                    height: 95,
+                    height: 75,
                     borderColor: "grey",
                     borderWidth: 1,
                     flexDirection: "row",
@@ -242,72 +195,160 @@ class OrderListScreen extends Component {
                     <Text
                       style={{
                         color: "white",
-                        fontSize: 14,
-                        paddingTop: 8,
-                        paddingLeft: 10
+                        fontSize: 24,
+                        paddingTop: 10,
+                        paddingLeft: 20
                       }}
                     >
-                      1100/07/2145
+                      14552
                     </Text>
                     <Text
                       style={{
                         color: "white",
-                        fontSize: 18,
-                        paddingTop: 1,
-                        paddingLeft: 10
+                        fontSize: 15,
+                        paddingTop: 3,
+                        paddingLeft: 20
                       }}
                     >
-                      Table: 07
-                    </Text>
-                    <Text
-                      style={{
-                        color: "yellow",
-                        fontSize: 14,
-                        paddingTop: 1,
-                        paddingLeft: 10
-                      }}
-                    >
-                      Pax: 03
-                    </Text>
-                    <Text
-                      style={{
-                        color: "yellow",
-                        fontSize: 12,
-                        paddingTop: 1,
-                        paddingLeft: 10
-                      }}
-                    >
-                      Order time: 12.35 pm
+                      Beef Vegetable Soup
                     </Text>
                   </View>
                   <View style={{ flex: 1, flexDirection: "column" }}>
                     <Text
                       style={{
                         color: "yellow",
-                        fontSize: 14,
-                        paddingTop: 8,
-                        paddingLeft: 1
+                        fontSize: 15,
+                        paddingTop: 30,
+                        paddingLeft: 20
                       }}
                     >
-                      Status: On Preparation
+                      Regular
+                    </Text>
+                  </View>
+                  <TouchableHighlight
+                    style={{ paddingRight: 15, paddingTop: 22 }}
+                  >
+                    <Image
+                      style={{ width: 22, height: 22 }}
+                      source={require("../images/trash.png")}
+                    />
+                  </TouchableHighlight>
+                </View>
+                <View
+                  style={{
+                    height: 35,
+                    borderColor: "grey",
+                    borderWidth: 1,
+                    flexDirection: "row",
+                    opacity: 1,
+                    backgroundColor: "rgba(244, 197, 66, 0.8)"
+                  }}
+                >
+                  <View style={{ flex: 1, flexDirection: "row" }}>
+                    <TouchableHighlight
+                      style={{ paddingTop: 5, paddingLeft: 20 }}
+                    >
+                      <Image
+                        style={{ width: 20, height: 20 }}
+                        source={require("../images/plus.png")}
+                      />
+                    </TouchableHighlight>
+                    <View
+                      style={{
+                        backgroundColor: "white",
+                        width: 30,
+                        height: 30,
+                        marginLeft: 12,
+                        borderRadius: 3,
+                        marginRight: 12
+                      }}
+                    >
+                      <Text style={{ fontSize: 20, paddingLeft: 4 }}>3</Text>
+                    </View>
+                    <TouchableHighlight style={{ paddingTop: 5 }}>
+                      <Image
+                        style={{ width: 20, height: 20 }}
+                        source={require("../images/minus.png")}
+                      />
+                    </TouchableHighlight>
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Text
+                      style={{
+                        color: "white",
+                        fontSize: 20,
+                        paddingTop: 3,
+                        paddingLeft: 20
+                      }}
+                    >
+                      21$
+                    </Text>
+                  </View>
+                  <View>
+                    <Text
+                      style={{
+                        color: "white",
+                        fontSize: 20,
+                        paddingTop: 3,
+                        paddingRight: 16
+                      }}
+                    >
+                      21$
+                    </Text>
+                  </View>
+                </View>
+              </View>
+              <View style={{ flexDirection: "column" }}>
+                <View
+                  style={{
+                    height: 75,
+                    borderColor: "grey",
+                    borderWidth: 1,
+                    flexDirection: "row",
+                    opacity: 1,
+                    backgroundColor: "rgba(52, 52, 52, 0.3)"
+                  }}
+                >
+                  <View style={{ flex: 1, flexDirection: "column" }}>
+                    <Text
+                      style={{
+                        color: "white",
+                        fontSize: 24,
+                        paddingTop: 10,
+                        paddingLeft: 20
+                      }}
+                    >
+                      14550
                     </Text>
                     <Text
                       style={{
                         color: "white",
-                        fontSize: 14,
-                        paddingTop: 8,
-                        paddingLeft: 1
+                        fontSize: 15,
+                        paddingTop: 3,
+                        paddingLeft: 20
                       }}
                     >
-                      Steward: SHANTHA
+                      Tomato Bazil Soup
+                    </Text>
+                  </View>
+                  <View style={{ flex: 1, flexDirection: "column" }}>
+                    <Text
+                      style={{
+                        color: "yellow",
+                        fontSize: 15,
+                        paddingTop: 30,
+                        paddingLeft: 20
+                      }}
+                    >
+                      Regular
                     </Text>
                   </View>
                   <TouchableHighlight
-                    style={{ paddingRight: 15, paddingTop: 32 }}
+                    style={{ paddingRight: 15, paddingTop: 22 }}
                   >
                     <Image
-                      style={{ width: 20, height: 20 }}
-                      source={require("../images/right.png")}
+                      style={{ width: 22, height: 22 }}
+                      source={require("../images/trash.png")}
                     />
                   </TouchableHighlight>
                 </View>
@@ -378,7 +419,7 @@ class OrderListScreen extends Component {
               <View style={{ flexDirection: "column" }}>
                 <View
                   style={{
-                    height: 95,
+                    height: 75,
                     borderColor: "grey",
                     borderWidth: 1,
                     flexDirection: "row",
@@ -390,72 +431,42 @@ class OrderListScreen extends Component {
                     <Text
                       style={{
                         color: "white",
-                        fontSize: 14,
-                        paddingTop: 8,
-                        paddingLeft: 10
+                        fontSize: 24,
+                        paddingTop: 10,
+                        paddingLeft: 20
                       }}
                     >
-                      1100/07/2145
+                      14552
                     </Text>
                     <Text
                       style={{
                         color: "white",
-                        fontSize: 18,
-                        paddingTop: 1,
-                        paddingLeft: 10
+                        fontSize: 15,
+                        paddingTop: 3,
+                        paddingLeft: 20
                       }}
                     >
-                      Table: 07
-                    </Text>
-                    <Text
-                      style={{
-                        color: "yellow",
-                        fontSize: 14,
-                        paddingTop: 1,
-                        paddingLeft: 10
-                      }}
-                    >
-                      Pax: 03
-                    </Text>
-                    <Text
-                      style={{
-                        color: "yellow",
-                        fontSize: 12,
-                        paddingTop: 1,
-                        paddingLeft: 10
-                      }}
-                    >
-                      Order time: 12.35 pm
+                      Beef Vegetable Soup
                     </Text>
                   </View>
                   <View style={{ flex: 1, flexDirection: "column" }}>
                     <Text
                       style={{
                         color: "yellow",
-                        fontSize: 14,
-                        paddingTop: 8,
-                        paddingLeft: 1
+                        fontSize: 15,
+                        paddingTop: 30,
+                        paddingLeft: 20
                       }}
                     >
-                      Status: On Preparation
-                    </Text>
-                    <Text
-                      style={{
-                        color: "white",
-                        fontSize: 14,
-                        paddingTop: 8,
-                        paddingLeft: 1
-                      }}
-                    >
-                      Steward: SHANTHA
+                      Regular
                     </Text>
                   </View>
                   <TouchableHighlight
-                    style={{ paddingRight: 15, paddingTop: 32 }}
+                    style={{ paddingRight: 15, paddingTop: 22 }}
                   >
                     <Image
-                      style={{ width: 20, height: 20 }}
-                      source={require("../images/right.png")}
+                      style={{ width: 22, height: 22 }}
+                      source={require("../images/trash.png")}
                     />
                   </TouchableHighlight>
                 </View>
@@ -488,7 +499,7 @@ class OrderListScreen extends Component {
                         marginRight: 12
                       }}
                     >
-                      <Text style={{ fontSize: 20, paddingLeft: 4 }}>1</Text>
+                      <Text style={{ fontSize: 20, paddingLeft: 4 }}>3</Text>
                     </View>
                     <TouchableHighlight style={{ paddingTop: 5 }}>
                       <Image
@@ -506,7 +517,7 @@ class OrderListScreen extends Component {
                         paddingLeft: 20
                       }}
                     >
-                      12$
+                      21$
                     </Text>
                   </View>
                   <View>
@@ -518,165 +529,98 @@ class OrderListScreen extends Component {
                         paddingRight: 16
                       }}
                     >
-                      24$
+                      21$
                     </Text>
                   </View>
                 </View>
               </View>
-              <View style={{ flexDirection: "column" }}>
-                <View
-                  style={{
-                    height: 95,
-                    borderColor: "grey",
-                    borderWidth: 1,
-                    flexDirection: "row",
-                    opacity: 1,
-                    backgroundColor: "rgba(52, 52, 52, 0.3)"
-                  }}
-                >
-                  <View style={{ flex: 1, flexDirection: "column" }}>
-                    <Text
-                      style={{
-                        color: "white",
-                        fontSize: 14,
-                        paddingTop: 8,
-                        paddingLeft: 10
-                      }}
-                    >
-                      1100/07/2145
-                    </Text>
-                    <Text
-                      style={{
-                        color: "white",
-                        fontSize: 18,
-                        paddingTop: 1,
-                        paddingLeft: 10
-                      }}
-                    >
-                      Table: 07
-                    </Text>
-                    <Text
-                      style={{
-                        color: "yellow",
-                        fontSize: 14,
-                        paddingTop: 1,
-                        paddingLeft: 10
-                      }}
-                    >
-                      Pax: 03
-                    </Text>
-                    <Text
-                      style={{
-                        color: "yellow",
-                        fontSize: 12,
-                        paddingTop: 1,
-                        paddingLeft: 10
-                      }}
-                    >
-                      Order time: 12.35 pm
-                    </Text>
-                  </View>
-                  <View style={{ flex: 1, flexDirection: "column" }}>
-                    <Text
-                      style={{
-                        color: "yellow",
-                        fontSize: 14,
-                        paddingTop: 8,
-                        paddingLeft: 1
-                      }}
-                    >
-                      Status: On Preparation
-                    </Text>
-                    <Text
-                      style={{
-                        color: "white",
-                        fontSize: 14,
-                        paddingTop: 8,
-                        paddingLeft: 1
-                      }}
-                    >
-                      Steward: SHANTHA
-                    </Text>
-                  </View>
-                  <TouchableHighlight
-                    style={{ paddingRight: 15, paddingTop: 32 }}
+
+              <View
+                style={{
+                  height: 75,
+                  borderColor: "grey",
+                  borderWidth: 1,
+                  flexDirection: "row",
+                  opacity: 1,
+                  backgroundColor: "rgba(52, 52, 52, 0.3)"
+                }}
+              >
+                <View style={{ flex: 1, flexDirection: "column" }}>
+                  <Text
+                    style={{
+                      color: "white",
+                      fontSize: 24,
+                      paddingTop: 20,
+                      paddingLeft: 60
+                    }}
                   >
-                    <Image
-                      style={{ width: 20, height: 20 }}
-                      source={require("../images/right.png")}
-                    />
-                  </TouchableHighlight>
+                    Total
+                  </Text>
                 </View>
-                <View
-                  style={{
-                    height: 35,
-                    borderColor: "grey",
-                    borderWidth: 1,
-                    flexDirection: "row",
-                    opacity: 1,
-                    backgroundColor: "rgba(244, 197, 66, 0.8)"
-                  }}
-                >
-                  <View style={{ flex: 1, flexDirection: "row" }}>
-                    <TouchableHighlight
-                      style={{ paddingTop: 5, paddingLeft: 20 }}
-                    >
-                      <Image
-                        style={{ width: 20, height: 20 }}
-                        source={require("../images/plus.png")}
-                      />
-                    </TouchableHighlight>
-                    <View
-                      style={{
-                        backgroundColor: "white",
-                        width: 30,
-                        height: 30,
-                        marginLeft: 12,
-                        borderRadius: 3,
-                        marginRight: 12
-                      }}
-                    >
-                      <Text style={{ fontSize: 20, paddingLeft: 4 }}>1</Text>
-                    </View>
-                    <TouchableHighlight style={{ paddingTop: 5 }}>
-                      <Image
-                        style={{ width: 20, height: 20 }}
-                        source={require("../images/minus.png")}
-                      />
-                    </TouchableHighlight>
-                  </View>
-                  <View style={{ flex: 1 }}>
-                    <Text
-                      style={{
-                        color: "white",
-                        fontSize: 20,
-                        paddingTop: 3,
-                        paddingLeft: 20
-                      }}
-                    >
-                      12$
-                    </Text>
-                  </View>
-                  <View>
-                    <Text
-                      style={{
-                        color: "white",
-                        fontSize: 20,
-                        paddingTop: 3,
-                        paddingRight: 16
-                      }}
-                    >
-                      24$
-                    </Text>
-                  </View>
+                <View>
+                  <Text
+                    style={{
+                      color: "white",
+                      fontSize: 20,
+                      paddingTop: 20,
+                      paddingRight: 16
+                    }}
+                  >
+                    45$
+                  </Text>
                 </View>
               </View>
             </View>
           </ScrollView>
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            borderColor: "grey",
+            borderWidth: 1,
+            backgroundColor: "rgba(52, 52, 52, 0.8)"
+          }}
+        >
+          <TouchableHighlight
+            style={styles.search}
+            onPress={() => this.props.navigation.navigate("Dinner")}
+            underlayColor="#fff"
+          >
+            <Text style={styles.submitText}>Order More</Text>
+          </TouchableHighlight>
+
+          <TouchableHighlight
+            style={styles.search}
+            onPress={() => this.props.navigation.navigate("CompleteOrder")}
+            underlayColor="#fff"
+          >
+            <Text style={styles.submitText}>Complete Order</Text>
+          </TouchableHighlight>
         </View>
       </ImageBackground>
     );
   }
 }
 
-export default OrderListScreen;
+const styles = StyleSheet.create({
+  search: {
+    margin: 15,
+    paddingTop: 5,
+    paddingBottom: 5,
+    backgroundColor: "#ff9800",
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#fff",
+    width: "45%",
+    height: 50,
+    flex: 1
+  },
+  submitText: {
+    color: "#fff",
+    textAlign: "center",
+    paddingTop: 5,
+    fontSize: 18
+  }
+});
+
+export default CurrentOrderScreen;

@@ -13,26 +13,11 @@ import {
   StatusBar
 } from "react-native";
 
-class BeginOrderScreen extends Component {
+class HomeScreen extends Component {
   state = {};
-
   static navigationOptions = {
-    title: "Delivery Method ",
-    headerTintColor: "white",
-    headerRight: (
-      <Image
-        style={{
-          width: 40,
-          height: 40,
-          marginTop: 2,
-          marginRight: 8
-        }}
-        source={require("../images/Orange_Logo.png")}
-      />
-    ),
-    headerStyle: {
-      backgroundColor: "#ff9800"
-    }
+    title: "Home",
+    header: null
   };
   render() {
     return (
@@ -46,10 +31,20 @@ class BeginOrderScreen extends Component {
           alignItems: "center"
         }}
       >
+        <View style={styles.bottomView} />
+        <Image
+          source={require("../images/Orange_Logo.png")}
+          style={{
+            width: 80,
+            height: 80,
+            marginTop: 30
+          }}
+        />
+
         <View style={styles.itemx}>
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => this.props.navigation.navigate("Dine")}
+            onPress={() => this.props.navigation.navigate("BeginOrder")}
           >
             <View style={styles.container}>
               <ImageBackground
@@ -63,7 +58,7 @@ class BeginOrderScreen extends Component {
                 }}
                 source={require("../images/Rectangle4.png")}
               >
-                <Text style={styles.sw}>DINE-IN</Text>
+                <Text style={styles.sw}>Begin Order</Text>
               </ImageBackground>
             </View>
           </TouchableOpacity>
@@ -84,7 +79,7 @@ class BeginOrderScreen extends Component {
                 }}
                 source={require("../images/Rectangle5.png")}
               >
-                <Text style={styles.sw}>DELIVERY</Text>
+                <Text style={styles.sw}>Order List</Text>
               </ImageBackground>
             </View>
           </TouchableOpacity>
@@ -106,7 +101,7 @@ class BeginOrderScreen extends Component {
                 }}
                 source={require("../images/Rectangle6.png")}
               >
-                <Text style={styles.sw}>TAKE-AWAY</Text>
+                <Text style={styles.sw}>Item List</Text>
               </ImageBackground>
             </View>
           </TouchableOpacity>
@@ -127,7 +122,7 @@ class BeginOrderScreen extends Component {
                 }}
                 source={require("../images/Rectangle7.png")}
               >
-                <Text style={styles.sw}>ROOM SERV.</Text>
+                <Text style={styles.sw}>Reports</Text>
               </ImageBackground>
             </View>
           </TouchableOpacity>
@@ -167,7 +162,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     flexDirection: "row",
     justifyContent: "space-between",
-    top: "20%"
+    top: "30%"
   },
   itemy: {
     width: "75%",
@@ -177,7 +172,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     flexDirection: "row",
     justifyContent: "space-between",
-    top: "45%"
+    top: "53%"
   },
   sw: {
     color: "white",
@@ -188,4 +183,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default BeginOrderScreen;
+export default HomeScreen;

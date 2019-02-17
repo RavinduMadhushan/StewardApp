@@ -65,7 +65,7 @@ class HomeScreen extends Component {
 
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => this.props.navigation.navigate("OrderList")}
+            onPress={() => this.props.navigation.navigate("Customer")}
           >
             <View style={styles.container}>
               <ImageBackground
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
   bottomView: {
     width: "100%",
     height: 54,
-    backgroundColor: "#FF9800",
+    backgroundColor: "#ff9800",
     justifyContent: "center",
     alignItems: "center",
     position: "absolute",

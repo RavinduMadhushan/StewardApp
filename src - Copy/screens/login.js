@@ -10,60 +10,14 @@ import {
   TouchableOpacity,
   StyleSheet,
   TouchableHighlight,
-  StatusBar,
-  AsyncStorage
+  StatusBar
 } from "react-native";
 
 export default class LoginScreen extends Component {
-  state = {
-    url: "http://195.206.181.226:10399/API/users.aspx",
-    pin: "",
-    users: []
-  };
+  state = {};
 
   static navigationOptions = {
     header: null
-  };
-
-  componentDidMount = async () => {
-    this.getUsers();
-  };
-
-  getUsers = async () => {
-    fetch(this.state.url)
-      .then(res => res.json())
-      .then(res => {
-        const response = JSON.stringify(res);
-        const object = JSON.parse(response);
-        this.setState({ users: object.SyncData[0].EntityData });
-        AsyncStorage.setItem("k", this.state.users);
-        let k = AsyncStorage.getItem("k");
-        alert(JSON.stringify(k));
-      })
-      .catch(err => alert(err));
-  };
-
-  login = () => {
-    let found = false;
-    let user = null;
-    //alert(this.state.users[0].PIN);
-
-    for (var i = 0; i < this.state.users.length; i++) {
-      if (this.state.users[i].PIN === this.state.pin) {
-        //alert(this.state.users[i].PIN);
-        user = this.state.users[i];
-        found = true;
-      } else {
-        //alert(this.state.users[i].PIN);
-      }
-    }
-
-    if (found) {
-      //alert("Welcome " + user.UserName);
-      this.props.navigation.navigate("Home");
-    } else {
-      alert("Wrong pin entered!");
-    }
   };
 
   render() {
@@ -106,12 +60,10 @@ export default class LoginScreen extends Component {
             backgroundColor: "white",
             marginBottom: 10
           }}
-          onChangeText={pin => this.setState({ pin })}
-          value={this.state.pin}
         />
         <TouchableHighlight
           style={styles.submit}
-          onPress={() => this.login()}
+          onPress={() => this.props.navigation.navigate("Home")}
           underlayColor="#fff"
         >
           <Text style={styles.submitText}>Login</Text>
