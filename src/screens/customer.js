@@ -16,7 +16,6 @@ import {
 class CustomerScreen extends Component {
   state = {};
   static navigationOptions = {
-<<<<<<< HEAD
     title: "Customer",
     headerTintColor: "white",
     headerRight: (
@@ -33,10 +32,6 @@ class CustomerScreen extends Component {
     headerStyle: {
       backgroundColor: "#ff9800"
     }
-=======
-    title: "Home",
-    header: null
->>>>>>> 5d2c0a1bdc56bc6b0119b2a0d5145719c24b0adb
   };
   render() {
     return (

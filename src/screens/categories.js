@@ -17,7 +17,6 @@ class CategoriesScreen extends Component {
   state = {};
 
   static navigationOptions = {
-<<<<<<< HEAD
     title: "Main Categories",
     headerTintColor: "white",
     headerRight: (
@@ -34,9 +33,6 @@ class CategoriesScreen extends Component {
     headerStyle: {
       backgroundColor: "#ff9800"
     }
-=======
-    title: "Main Categories"
->>>>>>> 5d2c0a1bdc56bc6b0119b2a0d5145719c24b0adb
   };
 
   render() {
@@ -51,7 +47,6 @@ class CategoriesScreen extends Component {
         }}
       >
         <View>
-<<<<<<< HEAD
           <TouchableOpacity
             activeOpacity={0.8}
             onPress={() => this.props.navigation.navigate("Dinner")}
@@ -70,7 +65,6 @@ class CategoriesScreen extends Component {
               </Text>
             </View>
           </TouchableOpacity>
-
           <TouchableOpacity
             activeOpacity={0.8}
             onPress={() => this.props.navigation.navigate("Dinner")}
@@ -125,7 +119,7 @@ class CategoriesScreen extends Component {
               </Text>
             </View>
           </TouchableOpacity>
-=======
+          ======= ======= >>>>>>> 4ae83bc9058c928d85f125e2c3b1f15bede042a3
           <View style={{ height: 100, borderColor: "grey", borderWidth: 1 }}>
             <Text
               style={{
@@ -178,7 +172,6 @@ class CategoriesScreen extends Component {
               WINE
             </Text>
           </View>
->>>>>>> 5d2c0a1bdc56bc6b0119b2a0d5145719c24b0adb
         </View>
       </ImageBackground>
     );
