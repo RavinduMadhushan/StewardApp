@@ -98,7 +98,7 @@ export default class LoginScreen extends Component {
         <TextInput
           keyboardType="numeric"
           style={{
-            height: 35,
+            height: 40,
             width: 180,
             backgroundColor: "white",
             marginBottom: 10

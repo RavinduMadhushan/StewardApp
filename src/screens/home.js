@@ -108,7 +108,7 @@ class HomeScreen extends Component {
 
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => this.props.navigation.navigate("Report")}
+            onPress={() => this.props.navigation.navigate("Item")}
           >
             <View style={styles.container}>
               <ImageBackground

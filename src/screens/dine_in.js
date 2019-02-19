@@ -4,7 +4,8 @@ import {
   Text,
   View,
   FlatList,
-  ImageBackground
+  ImageBackground,
+  Image
 } from "react-native";
 
 class DineInScreen extends Component {
@@ -44,7 +45,18 @@ class DineInScreen extends Component {
     headerTintColor: "white",
     headerStyle: {
       backgroundColor: "#ff9800"
-    }
+    },
+    headerRight: (
+      <Image
+        style={{
+          width: 40,
+          height: 40,
+          marginTop: 2,
+          marginRight: 8
+        }}
+        source={require("../images/Orange_Logo.png")}
+      />
+    )
   };
 
   formatData = (data, numColumns) => {
