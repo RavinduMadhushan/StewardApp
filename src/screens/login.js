@@ -36,9 +36,6 @@ export default class LoginScreen extends Component {
         const response = JSON.stringify(res);
         const object = JSON.parse(response);
         this.setState({ users: object.SyncData[0].EntityData });
-        AsyncStorage.setItem("k", this.state.users);
-        let k = AsyncStorage.getItem("k");
-        alert(JSON.stringify(k));
       })
       .catch(err => alert(err));
   };

@@ -22,13 +22,10 @@ import ListItemScreen from "./src/screens/list_item";
 import CustomerScreen from "./src/screens/customer";
 import NoOfPaxScreen from "./src/screens/no-of-pax";
 import CategoriesScreen from "./src/screens/categories";
-<<<<<<< HEAD
 import DineInScreen from "./src/screens/dine_in";
 import DinnerScreen from "./src/screens/dinner";
 import CurrentOrderScreen from "./src/screens/currentorder";
 import CompleteOrderScreen from "./src/screens/complete_order";
-=======
->>>>>>> 5d2c0a1bdc56bc6b0119b2a0d5145719c24b0adb
 
 export default class App extends Component {
   componentDidMount() {
@@ -51,16 +48,13 @@ const MainNavigator = createStackNavigator(
     ListItem: ListItemScreen,
     Customer: CustomerScreen,
     NoOfPax: NoOfPaxScreen,
-<<<<<<< HEAD
     Categories: CategoriesScreen,
     Dine: DineInScreen,
     Dinner: DinnerScreen,
     Customer: CustomerScreen,
     CurrentOrder: CurrentOrderScreen,
-    CompleteOrder: CompleteOrderScreen
-=======
+    CompleteOrder: CompleteOrderScreen,
     Categories: CategoriesScreen
->>>>>>> 5d2c0a1bdc56bc6b0119b2a0d5145719c24b0adb
   },
   {
     initialRouteName: "Login"
