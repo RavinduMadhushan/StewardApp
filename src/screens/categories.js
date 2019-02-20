@@ -93,7 +93,6 @@ class CategoriesScreen extends Component {
               </Text>
             </View>
           </TouchableOpacity>
-
           <TouchableOpacity
             activeOpacity={0.8}
             onPress={() => this.onSubmit("Lunch")}
