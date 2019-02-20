@@ -16,7 +16,7 @@ import {
 class ListItemScreen extends Component {
   state = {
     selecteditem: "",
-    categories: [1, 2],
+    categories: [],
     items: [],
     searching: null,
     catstates: {},
@@ -55,30 +55,61 @@ class ListItemScreen extends Component {
     return categories;
   };
 
-  static navigationOptions = {
-    title: "Item List",
-    headerTintColor: "white",
-    headerStyle: {
-      backgroundColor: "#ff9800"
-    },
-    headerRight: (
-      <Image
-        style={{
-          width: 40,
-          height: 40,
-          marginTop: 2,
-          marginRight: 8
-        }}
-        source={require("../images/Orange_Logo.png")}
-      />
-    )
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: navigation.getParam("type", "Meal Type"),
+      headerTintColor: "white",
+      headerStyle: {
+        backgroundColor: "#ff9800"
+      },
+      headerRight: (
+        <Image
+          style={{
+            width: 40,
+            height: 40,
+            marginTop: 2,
+            marginRight: 8
+          }}
+          source={require("../images/Orange_Logo.png")}
+        />
+      )
+    };
   };
-
   onDownClick = c => {
     const status = this.state.catstates[c];
     const s = { ...this.state.catstates };
     s[c] = !status;
     this.setState({ catstates: s });
+  };
+
+  onItemClick = item => {
+    try {
+      const { navigation } = this.props;
+      const pax = navigation.getParam("pax", "some default value");
+      const dm = navigation.getParam("dm", "some default value");
+      const table = navigation.getParam("table", "some default value");
+      const phn = navigation.getParam("phn", "some default value");
+      const name = navigation.getParam("name", "some default value");
+      const address = navigation.getParam("address", "some default value");
+      const roomno = navigation.getParam("roomno", "some default value");
+      const type = navigation.getParam("type", "some default value");
+      const start = navigation.getParam("start", "some default value");
+      navigation.navigate("Item", {
+        pax: pax,
+        dm: dm,
+        table: table,
+        phn: phn,
+        name: name,
+        address: address,
+        roomno: roomno,
+        pax: pax,
+        type: type,
+        item: JSON.stringify(item),
+        start: start
+      });
+    } catch (error) {
+      alert(error);
+    }
   };
 
   getIcon = c => {
@@ -199,6 +230,7 @@ class ListItemScreen extends Component {
                     <TouchableHighlight
                       title="Press"
                       style={{ paddingRight: 7, paddingTop: 20 }}
+                      onPress={() => this.onItemClick(item)}
                     >
                       <Image
                         style={{ width: 30, height: 30 }}
@@ -341,8 +373,8 @@ class ListItemScreen extends Component {
                                 </View>
 
                                 <TouchableHighlight
-                                  title="Press"
                                   style={{ paddingRight: 7, paddingTop: 20 }}
+                                  onPress={() => this.onItemClick(item)}
                                 >
                                   <Image
                                     style={{ width: 30, height: 30 }}

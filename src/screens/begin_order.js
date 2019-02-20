@@ -49,7 +49,12 @@ class BeginOrderScreen extends Component {
         <View style={styles.itemx}>
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => this.props.navigation.navigate("Dine")}
+            onPress={() =>
+              this.props.navigation.navigate("Dine", {
+                dm: "dine",
+                start: Date.now()
+              })
+            }
           >
             <View style={styles.container}>
               <ImageBackground

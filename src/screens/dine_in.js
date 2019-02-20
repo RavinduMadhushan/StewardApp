@@ -5,7 +5,8 @@ import {
   View,
   FlatList,
   ImageBackground,
-  Image
+  Image,
+  TouchableOpacity
 } from "react-native";
 
 class DineInScreen extends Component {
@@ -16,8 +17,12 @@ class DineInScreen extends Component {
 
   componentDidMount = async () => {
     this.getTables();
+    const dm = this.props.navigation.getParam("dm", "null");
+    const start = this.props.navigation.getParam("start", "null");
+    this.setState({ dm: dm, start: start });
   };
 
+  _keyExtractor = (item, index) => item.TableNo;
   getTables = async () => {
     fetch(this.state.url)
       .then(res => res.json())
@@ -98,22 +103,33 @@ class DineInScreen extends Component {
       );
     }
     return (
-      <ImageBackground
-        style={{
-          width: 90,
-          height: 90,
-          marginTop: 0,
-          justifyContent: "center",
-          alignItems: "center",
-          position: "relative",
-          margin: 10
-        }}
-        source={require("../images/Rectangle_1473.png")}
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() =>
+          this.props.navigation.navigate("Customer", {
+            dm: this.state.dm,
+            table: item.TableNo,
+            start: this.state.start
+          })
+        }
       >
-        <View style={styles.item}>
-          <Text style={styles.itemText}>{item.TableNo}</Text>
-        </View>
-      </ImageBackground>
+        <ImageBackground
+          style={{
+            width: 90,
+            height: 90,
+            marginTop: 0,
+            justifyContent: "center",
+            alignItems: "center",
+            position: "relative",
+            margin: 10
+          }}
+          source={require("../images/Rectangle_1473.png")}
+        >
+          <View style={styles.item}>
+            <Text style={styles.itemText}>{item.TableNo}</Text>
+          </View>
+        </ImageBackground>
+      </TouchableOpacity>
     );
   };
 
@@ -135,7 +151,7 @@ class DineInScreen extends Component {
             style={styles.container}
             renderItem={this.renderItem}
             numColumns={this.numColumns}
-            keyExtractor={this.state.table.TableNo}
+            keyExtractor={this._keyExtractor}
           />
         </View>
       </ImageBackground>

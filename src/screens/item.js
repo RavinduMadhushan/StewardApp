@@ -8,12 +8,18 @@ import {
   StyleSheet,
   ScrollView,
   Picker,
-  TextInput
+  TextInput,
+  AsyncStorage
 } from "react-native";
 
 class ItemScreen extends Component {
   state = {
-    size: "r"
+    size: "r",
+    item: {},
+    amount: 0,
+    price: "",
+    total: "",
+    note: ""
   };
   static navigationOptions = {
     title: "Order",
@@ -33,6 +39,151 @@ class ItemScreen extends Component {
       backgroundColor: "#ff9800"
     }
   };
+
+  componentDidMount() {
+    try {
+      const { navigation } = this.props;
+      const pax = navigation.getParam("pax", "some default value");
+      const dm = navigation.getParam("dm", "some default value");
+      const table = navigation.getParam("table", "some default value");
+      const phn = navigation.getParam("phn", "some default value");
+      const name = navigation.getParam("name", "some default value");
+      const address = navigation.getParam("address", "some default value");
+      const roomno = navigation.getParam("roomno", "some default value");
+      const item = JSON.parse(navigation.getParam("item", "null"));
+      //alert(JSON.stringify(item));
+      this.setState({
+        item: item,
+        price: item.dblRegPrice,
+        amount: 1,
+        total: item.dblRegPrice
+      });
+      /* this.props.navigation.navigate("ListItem", {
+          pax: pax,
+          dm: dm,
+          table: table,
+          phn: phn,
+          name: name,
+          address: address,
+          roomno: roomno,
+          pax: pax,
+          type: type
+        }); */
+    } catch (error) {
+      alert(error);
+    }
+  }
+
+  onPlusClick = () => {
+    let amount = parseInt(this.state.amount);
+    amount++;
+    let price = parseInt(this.state.price) * amount;
+    this.setState({ amount: amount, total: price });
+  };
+
+  onMinusClick = () => {
+    let amount = parseInt(this.state.amount);
+    if (amount == 0) return;
+    amount--;
+    let price = parseInt(this.state.price) * amount;
+    this.setState({ amount: amount, total: price });
+  };
+
+  addOrder = async () => {
+    const { navigation } = this.props;
+    const start = navigation.getParam("start", "some default value");
+    const pax = navigation.getParam("pax", "some default value");
+    const dm = navigation.getParam("dm", "some default value");
+    const table = navigation.getParam("table", "some default value");
+    const phn = navigation.getParam("phn", "some default value");
+    const name = navigation.getParam("name", "some default value");
+    const address = navigation.getParam("address", "some default value");
+    const roomno = navigation.getParam("roomno", "some default value");
+    const type = navigation.getParam("type", "some default value");
+    try {
+      const value = await AsyncStorage.getItem("currentorder");
+      if (value == null) {
+        let currentorder = {
+          start: start,
+          end: Date.now(),
+          phn: phn,
+          name: name,
+          address: address,
+          dm: dm,
+          table: table,
+          roomno: roomno,
+          pax: pax,
+          items: [
+            {
+              itemcode: this.state.item.ItemNo,
+              amount: this.state.amount,
+              size: this.state.size,
+              note: this.state.note,
+              price: this.state.price,
+              name: this.state.item.ItemName
+            }
+          ]
+        };
+        this._storeData("currentorder", JSON.stringify(currentorder));
+        alert("Items successfully added to the order.");
+        this.props.navigation.navigate("ListItem", {
+          pax: pax,
+          dm: dm,
+          table: table,
+          phn: phn,
+          name: name,
+          address: address,
+          roomno: roomno,
+          pax: pax,
+          type: type,
+          start: start
+        });
+      } else {
+        let currentorders = JSON.parse(value);
+        alert(currentorders.items.length);
+        let items = currentorders.items;
+        items.push({
+          itemcode: this.state.item.ItemNo,
+          amount: this.state.amount,
+          size: this.state.size,
+          note: this.state.note,
+          price: this.state.price,
+          name: this.state.item.ItemName
+        });
+        this._storeData("currentorder", JSON.stringify(currentorders));
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  _storeData = async (key, value) => {
+    try {
+      await AsyncStorage.setItem(key, value);
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  viewOrder = () => {
+    this._retrieveData();
+  };
+
+  _retrieveData = async () => {
+    try {
+      const value = await AsyncStorage.getItem("currentorder");
+      if (value !== null) {
+        this.props.navigation.navigate("CurrentOrder");
+      } else {
+        alert(
+          "No previous items in the order. please add items to view order."
+        );
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
+
   render() {
     return (
       <ImageBackground
@@ -58,7 +209,7 @@ class ItemScreen extends Component {
                 fontWeight: "bold"
               }}
             >
-              Current Order
+              {this.state.item.ItemName}
             </Text>
             <Text
               style={{
@@ -71,9 +222,7 @@ class ItemScreen extends Component {
                 paddingBottom: 10
               }}
             >
-              In the following example, the nested title and body text will
-              inherit the fontFamily from styles.baseText, but the title
-              provides its own additional styles.
+              {this.state.item.Description}
             </Text>
           </View>
           <ScrollView>
@@ -106,9 +255,34 @@ class ItemScreen extends Component {
                       selectedValue={this.state.size}
                       style={{ height: 50, width: 130 }}
                       itemStyle={{ color: "blue" }}
-                      onValueChange={(itemValue, itemIndex) =>
-                        this.setState({ size: itemValue })
-                      }
+                      onValueChange={(itemValue, itemIndex) => {
+                        this.setState({ size: itemValue });
+                        if (itemValue === "r") {
+                          let amount = parseInt(this.state.amount);
+                          let price =
+                            parseInt(this.state.item.dblRegPrice) * amount;
+                          this.setState({
+                            price: this.state.item.dblRegPrice,
+                            total: price
+                          });
+                        } else if (itemValue === "l") {
+                          let amount = parseInt(this.state.amount);
+                          let price =
+                            parseInt(this.state.item.dblLargePrice) * amount;
+                          this.setState({
+                            price: this.state.item.dblLargePrice,
+                            total: price
+                          });
+                        } else if (itemValue === "s") {
+                          let amount = parseInt(this.state.amount);
+                          let price =
+                            parseInt(this.state.item.dblSmallPrice) * amount;
+                          this.setState({
+                            price: this.state.item.dblSmallPrice,
+                            total: price
+                          });
+                        }
+                      }}
                     >
                       <Picker.Item label="Small" value="s" />
                       <Picker.Item label="Regular" value="r" />
@@ -126,6 +300,7 @@ class ItemScreen extends Component {
                       style={{ flex: 1, flexDirection: "row", marginTop: 20 }}
                     >
                       <TouchableHighlight
+                        onPress={this.onPlusClick}
                         style={{ paddingTop: 5, paddingLeft: 20 }}
                       >
                         <Image
@@ -143,9 +318,14 @@ class ItemScreen extends Component {
                           marginRight: 12
                         }}
                       >
-                        <Text style={{ fontSize: 20, paddingLeft: 4 }}>1</Text>
+                        <Text style={{ fontSize: 20, paddingLeft: 4 }}>
+                          {this.state.amount}
+                        </Text>
                       </View>
-                      <TouchableHighlight style={{ paddingTop: 5 }}>
+                      <TouchableHighlight
+                        style={{ paddingTop: 5 }}
+                        onPress={this.onMinusClick}
+                      >
                         <Image
                           style={{ width: 20, height: 20 }}
                           source={require("../images/minus.png")}
@@ -156,7 +336,7 @@ class ItemScreen extends Component {
                   <TouchableHighlight
                     style={{ paddingRight: 15, paddingTop: 22 }}
                   >
-                    <Text style={{ fontSize: 20 }}>12$</Text>
+                    <Text style={{ fontSize: 20 }}>{this.state.price}$</Text>
                   </TouchableHighlight>
                 </View>
                 <View
@@ -180,7 +360,7 @@ class ItemScreen extends Component {
                         paddingRight: 16
                       }}
                     >
-                      24$
+                      {this.state.total}$
                     </Text>
                   </View>
                 </View>
@@ -204,6 +384,8 @@ class ItemScreen extends Component {
                     height: 50,
                     margin: 15
                   }}
+                  onChangeText={note => this.setState({ note })}
+                  value={this.state.note}
                 />
               </View>
             </View>
@@ -219,18 +401,18 @@ class ItemScreen extends Component {
         >
           <TouchableHighlight
             style={styles.search}
-            onPress={() => this.props.navigation.navigate("Dinner")}
+            onPress={this.viewOrder}
             underlayColor="#fff"
           >
-            <Text style={styles.submitText}>Order More</Text>
+            <Text style={styles.submitText}>View Order</Text>
           </TouchableHighlight>
 
           <TouchableHighlight
             style={styles.search}
-            onPress={() => this.props.navigation.navigate("CompleteOrder")}
+            onPress={this.addOrder}
             underlayColor="#fff"
           >
-            <Text style={styles.submitText}>Complete Order</Text>
+            <Text style={styles.submitText}>Add to Order</Text>
           </TouchableHighlight>
         </View>
       </ImageBackground>

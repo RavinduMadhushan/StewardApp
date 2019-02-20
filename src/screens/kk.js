@@ -161,12 +161,20 @@ class CurrentOrderScreen extends Component {
                       }}
                     >
                       <View style={{ flex: 1, flexDirection: "row" }}>
+                        <TouchableHighlight
+                          style={{ paddingTop: 5, paddingLeft: 20 }}
+                        >
+                          <Image
+                            style={{ width: 20, height: 20 }}
+                            source={require("../images/plus.png")}
+                          />
+                        </TouchableHighlight>
                         <View
                           style={{
                             backgroundColor: "white",
                             width: 30,
                             height: 30,
-                            marginLeft: 30,
+                            marginLeft: 12,
                             borderRadius: 3,
                             marginRight: 12
                           }}
@@ -175,6 +183,12 @@ class CurrentOrderScreen extends Component {
                             {item.amount}
                           </Text>
                         </View>
+                        <TouchableHighlight style={{ paddingTop: 5 }}>
+                          <Image
+                            style={{ width: 20, height: 20 }}
+                            source={require("../images/minus.png")}
+                          />
+                        </TouchableHighlight>
                       </View>
                       <View style={{ flex: 1 }}>
                         <Text

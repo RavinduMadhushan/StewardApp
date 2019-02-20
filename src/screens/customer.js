@@ -15,6 +15,15 @@ import {
 
 class CustomerScreen extends Component {
   state = {};
+
+  componentDidMount() {
+    const { navigation } = this.props;
+    const dm = navigation.getParam("dm", "some default value");
+    const table = navigation.getParam("table", "some default value");
+    const start = navigation.getParam("start", "some default value");
+    //alert(dm);
+    this.setState({ dm: dm, table: table, start: start });
+  }
   static navigationOptions = {
     title: "Customer",
     headerTintColor: "white",
@@ -102,7 +111,17 @@ class CustomerScreen extends Component {
         </View>
         <TouchableHighlight
           style={styles.search}
-          onPress={() => this.props.navigation.navigate("NoOfPax")}
+          onPress={() =>
+            this.props.navigation.navigate("NoOfPax", {
+              dm: this.state.dm,
+              table: this.state.table,
+              start: this.state.start,
+              name: "",
+              phn: "",
+              address: "",
+              roomno: ""
+            })
+          }
           underlayColor="#fff"
         >
           <Text style={styles.submitText}>Continue Order</Text>

@@ -14,7 +14,9 @@ import {
 } from "react-native";
 
 class NoOfPaxScreen extends Component {
-  state = {};
+  state = {
+    text: ""
+  };
   static navigationOptions = {
     title: "No of Pax",
     headerTintColor: "white",
@@ -31,6 +33,35 @@ class NoOfPaxScreen extends Component {
     ),
     headerStyle: {
       backgroundColor: "#ff9800"
+    }
+  };
+
+  onSubmit = () => {
+    try {
+      const { navigation } = this.props;
+      const pax = parseInt(this.state.text);
+      if (pax == NaN) {
+        return alert("Please enter a correct pax");
+      }
+      const dm = navigation.getParam("dm", "some default value");
+      const table = navigation.getParam("table", "some default value");
+      const phn = navigation.getParam("phn", "some default value");
+      const name = navigation.getParam("name", "some default value");
+      const address = navigation.getParam("address", "some default value");
+      const roomno = navigation.getParam("roomno", "some default value");
+      const start = navigation.getParam("start", "some default value");
+      this.props.navigation.navigate("Categories", {
+        pax: pax,
+        dm: dm,
+        table: table,
+        phn: phn,
+        name: name,
+        address: address,
+        roomno: roomno,
+        start: start
+      });
+    } catch (error) {
+      alert("Please enter a valid pax amount.");
     }
   };
   render() {
@@ -64,10 +95,12 @@ class NoOfPaxScreen extends Component {
               fontSize: 15,
               paddingLeft: 20
             }}
+            onChangeText={text => this.setState({ text })}
+            value={this.state.text}
           />
           <TouchableHighlight
             style={styles.submit}
-            onPress={() => this.props.navigation.navigate("Categories")}
+            onPress={this.onSubmit}
             underlayColor="#fff"
           >
             <Text style={styles.submitText}>Continue</Text>
