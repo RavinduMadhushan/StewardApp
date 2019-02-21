@@ -40,23 +40,39 @@ export default class LoginScreen extends Component {
       .catch(err => alert(err));
   };
 
+  storeData = async (key, data) => {
+    try {
+      await AsyncStorage.setItem(key, data);
+    } catch (error) {
+      alert("Errorll : ", key);
+    }
+  };
+
   login = () => {
     let found = false;
     let user = null;
-    //alert(this.state.users[0].PIN);
 
     for (var i = 0; i < this.state.users.length; i++) {
       if (this.state.users[i].PIN === this.state.pin) {
-        //alert(this.state.users[i].PIN);
         user = this.state.users[i];
+        this.storeData("uname", JSON.stringify(user));
+
         found = true;
       } else {
-        //alert(this.state.users[i].PIN);
       }
     }
+    // _retrieveData = async () => {
+    //   try {
+    //     const value = await AsyncStorage.getItem("uname");
+    //     alert(value);
+    //   } catch (error) {
+    //     // Error retrieving data
+    //   }
+    // };
 
     if (found) {
-      //alert("Welcome " + user.UserName);
+      // _retrieveData();
+
       this.props.navigation.navigate("Home");
     } else {
       alert("Wrong pin entered!");
