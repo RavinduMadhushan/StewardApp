@@ -14,7 +14,11 @@ import {
 } from "react-native";
 
 class CustomerScreen extends Component {
-  state = {};
+  state = {
+    phoneno: "",
+    name: "",
+    address: ""
+  };
 
   componentDidMount() {
     const { navigation } = this.props;
@@ -63,6 +67,7 @@ class CustomerScreen extends Component {
           }}
         >
           <TextInput
+            keyboardType="numeric"
             placeholder="Phone no"
             placeholderTextColor="#ADD8E6"
             textContentType="telephoneNumber"
@@ -73,15 +78,9 @@ class CustomerScreen extends Component {
               fontSize: 15,
               paddingLeft: 10
             }}
+            onChangeText={phoneno => this.setState({ phoneno })}
+            value={this.state.phoneno}
           />
-          <TouchableHighlight
-            style={styles.submit}
-            onPress={() => alert("Clicked")}
-            underlayColor="#fff"
-          >
-            <Text style={styles.submitText}>Search Customer</Text>
-          </TouchableHighlight>
-
           <TextInput
             placeholder="Name"
             placeholderTextColor="#ADD8E6"
@@ -93,6 +92,8 @@ class CustomerScreen extends Component {
               marginTop: 10,
               paddingTop: 10
             }}
+            onChangeText={name => this.setState({ name })}
+            value={this.state.name}
           />
           <TextInput
             placeholder="Address"
@@ -107,6 +108,8 @@ class CustomerScreen extends Component {
               paddingLeft: 10,
               marginTop: 10
             }}
+            onChangeText={address => this.setState({ address })}
+            value={this.state.address}
           />
         </View>
         <TouchableHighlight
@@ -116,9 +119,9 @@ class CustomerScreen extends Component {
               dm: this.state.dm,
               table: this.state.table,
               start: this.state.start,
-              name: "",
-              phn: "",
-              address: "",
+              name: this.state.name,
+              phn: this.state.phoneno,
+              address: this.state.address,
               roomno: ""
             })
           }

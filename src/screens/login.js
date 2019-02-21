@@ -96,6 +96,7 @@ export default class LoginScreen extends Component {
           }}
         />
         <TextInput
+          secureTextEntry
           keyboardType="numeric"
           style={{
             height: 40,

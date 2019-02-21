@@ -85,6 +85,7 @@ class NoOfPaxScreen extends Component {
           }}
         >
           <TextInput
+            keyboardType="numeric"
             placeholder="No of Pax"
             placeholderTextColor="#ADD8E6"
             textContentType="telephoneNumber"
