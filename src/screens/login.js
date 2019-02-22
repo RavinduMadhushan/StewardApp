@@ -25,10 +25,7 @@ export default class LoginScreen extends Component {
     header: null
   };
 
-  componentDidMount = async () => {
-    await this.retrieveData();
-    this.getUsers();
-  };
+  componentDidMount = async () => {};
 
   retrieveData = async () => {
     try {
@@ -45,6 +42,13 @@ export default class LoginScreen extends Component {
   };
 
   getUsers = async () => {
+    const url = await AsyncStorage.getItem("url");
+    if (url == null) {
+      //alert("Please enter the server address before login.");
+      return;
+    } else {
+      this.setState({ url: url + "users.aspx" });
+    }
     fetch(this.state.url)
       .then(res => res.json())
       .then(res => {
@@ -64,6 +68,7 @@ export default class LoginScreen extends Component {
   };
 
   login = () => {
+    this.getUsers();
     let found = false;
     let user = null;
 

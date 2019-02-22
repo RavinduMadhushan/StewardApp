@@ -112,36 +112,69 @@ class DineInScreen extends Component {
           <View style={[styles.item, styles.itemInvisible]} />
         </ImageBackground>
       );
+    } else {
+      if (item.isOccupied == true) {
+        return (
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() =>
+              this.props.navigation.navigate("Customer", {
+                dm: this.state.dm,
+                table: item.TableNo,
+                start: this.state.start
+              })
+            }
+          >
+            <ImageBackground
+              style={{
+                width: 90,
+                height: 90,
+                marginTop: 0,
+                justifyContent: "center",
+                alignItems: "center",
+                position: "relative",
+                margin: 10
+              }}
+              source={require("../images/Rectangle_1474.png")}
+            >
+              <View style={styles.item}>
+                <Text style={styles.itemText}>{item.TableNo}</Text>
+              </View>
+            </ImageBackground>
+          </TouchableOpacity>
+        );
+      } else {
+        return (
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() =>
+              this.props.navigation.navigate("Customer", {
+                dm: this.state.dm,
+                table: item.TableNo,
+                start: this.state.start
+              })
+            }
+          >
+            <ImageBackground
+              style={{
+                width: 90,
+                height: 90,
+                marginTop: 0,
+                justifyContent: "center",
+                alignItems: "center",
+                position: "relative",
+                margin: 10
+              }}
+              source={require("../images/Rectangle_1473.png")}
+            >
+              <View style={styles.item}>
+                <Text style={styles.itemText}>{item.TableNo}</Text>
+              </View>
+            </ImageBackground>
+          </TouchableOpacity>
+        );
+      }
     }
-    return (
-      <TouchableOpacity
-        activeOpacity={0.8}
-        onPress={() =>
-          this.props.navigation.navigate("Customer", {
-            dm: this.state.dm,
-            table: item.TableNo,
-            start: this.state.start
-          })
-        }
-      >
-        <ImageBackground
-          style={{
-            width: 90,
-            height: 90,
-            marginTop: 0,
-            justifyContent: "center",
-            alignItems: "center",
-            position: "relative",
-            margin: 10
-          }}
-          source={require("../images/Rectangle_1473.png")}
-        >
-          <View style={styles.item}>
-            <Text style={styles.itemText}>{item.TableNo}</Text>
-          </View>
-        </ImageBackground>
-      </TouchableOpacity>
-    );
   };
 
   render() {
