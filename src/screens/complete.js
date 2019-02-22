@@ -10,7 +10,7 @@ import {
   AsyncStorage
 } from "react-native";
 
-class CompleteOrderScreen extends Component {
+class CompleteScreen extends Component {
   state = {
     currentorder: ""
   };
@@ -89,4 +89,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default CompleteOrderScreen;
+export default CompleteScreen;

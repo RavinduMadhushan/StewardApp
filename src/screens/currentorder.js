@@ -34,6 +34,16 @@ class CurrentOrderScreen extends Component {
     }
   };
 
+  getTotal = () => {
+    let total = 0;
+    for (let i = 0; i < this.state.items.length; i++) {
+      total +=
+        parseInt(this.state.items[i].price) *
+        parseInt(this.state.items[i].amount);
+    }
+    return total;
+  };
+
   getSize = size => {
     if (size == "r") {
       return "Regular";
@@ -59,6 +69,50 @@ class CurrentOrderScreen extends Component {
       alert(error);
     }
   };
+
+  onDelete = async item => {
+    try {
+      const value = await AsyncStorage.getItem("currentorder");
+      if (value !== null) {
+        let data = JSON.parse(value);
+        let items = data.items;
+        let index = this.state.items.indexOf(item);
+
+        items.splice(index, 1);
+        data.items = items;
+        this._storeData("currentorder", JSON.stringify(data));
+        this._retrieveData();
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  _storeData = async (key, value) => {
+    try {
+      await AsyncStorage.setItem(key, value);
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  complete = () => {
+    this._retrievec();
+  };
+
+  _retrievec = async () => {
+    try {
+      const value = await AsyncStorage.getItem("currentorder");
+      if (value !== null) {
+        await alert(value);
+        await AsyncStorage.removeItem("currentorder");
+        this.props.navigation.navigate("Home");
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
+
   render() {
     return (
       <ImageBackground
@@ -236,7 +290,7 @@ class CurrentOrderScreen extends Component {
                       paddingRight: 16
                     }}
                   >
-                    45$
+                    {this.getTotal()}$
                   </Text>
                 </View>
               </View>
@@ -261,7 +315,7 @@ class CurrentOrderScreen extends Component {
 
           <TouchableHighlight
             style={styles.search}
-            onPress={() => this.props.navigation.navigate("CompleteOrder")}
+            onPress={this.complete}
             underlayColor="#fff"
           >
             <Text style={styles.submitText}>Complete Order</Text>

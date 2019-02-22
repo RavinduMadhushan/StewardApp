@@ -10,10 +10,52 @@ import {
   Image,
   ScrollView,
   AsyncStorage,
-  TouchableOpacity
+  TouchableOpacity,
+  BackHandler
 } from "react-native";
 
 class ListItemScreen extends Component {
+  _didFocusSubscription;
+  _willBlurSubscription;
+
+  constructor(props) {
+    super(props);
+    this._didFocusSubscription = props.navigation.addListener(
+      "didFocus",
+      payload =>
+        BackHandler.addEventListener(
+          "hardwareBackPress",
+          this.onBackButtonPressAndroid
+        )
+    );
+  }
+
+  componentDidMount() {
+    this._willBlurSubscription = this.props.navigation.addListener(
+      "willBlur",
+      payload =>
+        BackHandler.removeEventListener(
+          "hardwareBackPress",
+          this.onBackButtonPressAndroid
+        )
+    );
+    this.retrieveData();
+  }
+
+  onBackButtonPressAndroid = () => {
+    if (this.state.order) {
+      alert("You have an unfinished order. Please complete it.");
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  /*   componentWillUnmount() {
+    this._didFocusSubscription && this._didFocusSubscription.remove();
+    this._willBlurSubscription && this._willBlurSubscription.remove();
+  } */
+
   state = {
     selecteditem: "",
     categories: [],
@@ -21,22 +63,26 @@ class ListItemScreen extends Component {
     searching: null,
     catstates: {},
     searchquery: "",
-    searchresults: []
+    searchresults: [],
+    order: false
   };
-
-  componentDidMount() {
-    this.retrieveData();
-  }
 
   retrieveData = async () => {
     const itms = await AsyncStorage.getItem("items");
+    const order = await AsyncStorage.getItem("currentorder");
     const items = JSON.parse(itms);
+
     if (items !== null) {
       //const tt = [{ SubCat: "a" }, { SubCat: "a" }, { SubCat: "a" }];
       const categories = this.parseCatogeries(items);
       this.setState({ items: items, categories: categories });
     } else {
       alert("Please sync with the server before placing an order.");
+    }
+    if (order !== null) {
+      this.setState({ order: true });
+    } else {
+      this.setState({ order: false });
     }
   };
 
@@ -72,7 +118,8 @@ class ListItemScreen extends Component {
           }}
           source={require("../images/Orange_Logo.png")}
         />
-      )
+      ),
+      headerLeft: null
     };
   };
   onDownClick = c => {
@@ -80,6 +127,15 @@ class ListItemScreen extends Component {
     const s = { ...this.state.catstates };
     s[c] = !status;
     this.setState({ catstates: s });
+  };
+
+  cancelOrder = async () => {
+    try {
+      await AsyncStorage.removeItem("currentorder");
+      this.props.navigation.navigate("Home");
+    } catch (error) {
+      alert(error);
+    }
   };
 
   onItemClick = item => {
@@ -392,6 +448,30 @@ class ListItemScreen extends Component {
             })}
           </ScrollView>
         </View>
+        <View
+          style={{
+            flexDirection: "row",
+            borderColor: "grey",
+            borderWidth: 1,
+            backgroundColor: "rgba(52, 52, 52, 0.8)"
+          }}
+        >
+          <TouchableHighlight
+            style={styles.searchs}
+            onPress={() => this.props.navigation.navigate("CurrentOrder")}
+            underlayColor="#fff"
+          >
+            <Text style={styles.submitText}>View Order</Text>
+          </TouchableHighlight>
+
+          <TouchableHighlight
+            style={styles.searchs}
+            onPress={this.cancelOrder}
+            underlayColor="#fff"
+          >
+            <Text style={styles.submitText}>Cancel Order</Text>
+          </TouchableHighlight>
+        </View>
       </ImageBackground>
     );
   }
@@ -440,6 +520,18 @@ const styles = StyleSheet.create({
     textAlign: "center",
     paddingTop: 5,
     fontSize: 18
+  },
+  searchs: {
+    margin: 15,
+    paddingTop: 5,
+    paddingBottom: 5,
+    backgroundColor: "#ff9800",
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#fff",
+    width: "45%",
+    height: 50,
+    flex: 1
   }
 });
 

@@ -27,6 +27,7 @@ import DinnerScreen from "./src/screens/dinner";
 import CurrentOrderScreen from "./src/screens/currentorder";
 import CompleteOrderScreen from "./src/screens/complete_order";
 import ItemScreen from "./src/screens/item";
+import CompleteScreen from "./src/screens/complete";
 
 export default class App extends Component {
   componentDidMount() {
@@ -56,7 +57,8 @@ const MainNavigator = createStackNavigator(
     CurrentOrder: CurrentOrderScreen,
     CompleteOrder: CompleteOrderScreen,
     Categories: CategoriesScreen,
-    Item: ItemScreen
+    Item: ItemScreen,
+    Complete: CompleteScreen
   },
   {
     initialRouteName: "Login"

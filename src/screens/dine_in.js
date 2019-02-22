@@ -6,16 +6,19 @@ import {
   FlatList,
   ImageBackground,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  ActivityIndicator,
+  AsyncStorage
 } from "react-native";
 
 class DineInScreen extends Component {
   state = {
-    url: "http://195.206.181.226:10399/API/tables.aspx",
+    url: "",
     table: []
   };
 
   componentDidMount = async () => {
+    //this.retrieveData();
     this.getTables();
     const dm = this.props.navigation.getParam("dm", "null");
     const start = this.props.navigation.getParam("start", "null");
@@ -23,8 +26,12 @@ class DineInScreen extends Component {
   };
 
   _keyExtractor = (item, index) => item.TableNo;
+
   getTables = async () => {
-    fetch(this.state.url)
+    this.setState({ loading: true });
+    const url = await AsyncStorage.getItem("url");
+    //alert(url + "tables.aspx");
+    fetch(url + "tables.aspx")
       .then(res => res.json())
       .then(res => {
         const response = JSON.stringify(res);
@@ -33,8 +40,12 @@ class DineInScreen extends Component {
         // sh.info.reverse();
         // alert(sh);
         this.setState({ table: object.SyncData[0].EntityData });
+        this.setState({ loading: false });
       })
-      .catch(err => alert(err));
+      .catch(err => {
+        alert(err);
+        this.setState({ loading: false });
+      });
   };
 
   // reverseArr = input => {
@@ -134,6 +145,21 @@ class DineInScreen extends Component {
   };
 
   render() {
+    if (this.state.loading == true) {
+      return (
+        <ImageBackground
+          source={require("../images/BG.png")}
+          style={{
+            width: "100%",
+            height: "100%"
+          }}
+        >
+          <View style={[styles.containerss, styles.horizontal]}>
+            <ActivityIndicator size={90} color="#ffffff" />
+          </View>
+        </ImageBackground>
+      );
+    }
     return (
       <ImageBackground
         source={require("../images/BG.png")}
@@ -175,6 +201,15 @@ const styles = StyleSheet.create({
   },
   itemText: {
     color: "#fff"
+  },
+  containerss: {
+    flex: 1,
+    justifyContent: "center"
+  },
+  horizontal: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    padding: 10
   }
 });
 

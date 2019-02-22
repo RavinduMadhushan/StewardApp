@@ -10,7 +10,8 @@ import {
   TouchableOpacity,
   StyleSheet,
   TouchableHighlight,
-  StatusBar
+  StatusBar,
+  AsyncStorage
 } from "react-native";
 
 class CategoriesScreen extends Component {

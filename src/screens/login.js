@@ -16,7 +16,7 @@ import {
 
 export default class LoginScreen extends Component {
   state = {
-    url: "http://195.206.181.226:10399/API/users.aspx",
+    url: "",
     pin: "",
     users: []
   };
@@ -26,7 +26,22 @@ export default class LoginScreen extends Component {
   };
 
   componentDidMount = async () => {
+    await this.retrieveData();
     this.getUsers();
+  };
+
+  retrieveData = async () => {
+    try {
+      const url = await AsyncStorage.getItem("url");
+      if (url == null) {
+        alert("Please enter the server address before login.");
+        return;
+      } else {
+        this.setState({ url: url + "users.aspx" });
+      }
+    } catch (error) {
+      alert(error);
+    }
   };
 
   getUsers = async () => {

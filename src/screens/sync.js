@@ -27,7 +27,13 @@ export default class SyncScreen extends Component {
       const lastsync = await AsyncStorage.getItem("lastsync");
       const items = await AsyncStorage.getItem("items");
       const tables = await AsyncStorage.getItem("tables");
-
+      const url = await AsyncStorage.getItem("url");
+      if (url == null) {
+        alert("Please enter the server address before synchronization.");
+        return;
+      } else {
+        this.setState({ url: url });
+      }
       if (lastsync !== null) {
         this.setState({
           lastsync: lastsync,
@@ -54,11 +60,11 @@ export default class SyncScreen extends Component {
   sync = async () => {
     this.setState({ loading: true });
     try {
-      await fetch("http://195.206.181.226:10399/API/Items.aspx")
+      await fetch(this.state.url + "Items.aspx")
         .then(res => res.json())
         .then(res => {
           this.storeData("items", JSON.stringify(res.SyncData[0].EntityData));
-          fetch("http://195.206.181.226:10399/API/tables.aspx")
+          fetch(this.state.url + "tables.aspx")
             .then(res => res.json())
             .then(res => {
               this.storeData(

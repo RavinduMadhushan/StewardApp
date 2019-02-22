@@ -140,7 +140,7 @@ class ItemScreen extends Component {
         });
       } else {
         let currentorders = JSON.parse(value);
-        alert(currentorders.items.length);
+        //alert(currentorders.items.length);
         let items = currentorders.items;
         items.push({
           itemcode: this.state.item.ItemNo,
@@ -151,6 +151,19 @@ class ItemScreen extends Component {
           name: this.state.item.ItemName
         });
         this._storeData("currentorder", JSON.stringify(currentorders));
+        alert("Items successfully added to the order.");
+        this.props.navigation.navigate("ListItem", {
+          pax: pax,
+          dm: dm,
+          table: table,
+          phn: phn,
+          name: name,
+          address: address,
+          roomno: roomno,
+          pax: pax,
+          type: type,
+          start: start
+        });
       }
     } catch (error) {
       alert(error);
@@ -173,6 +186,7 @@ class ItemScreen extends Component {
     try {
       const value = await AsyncStorage.getItem("currentorder");
       if (value !== null) {
+        alert(value);
         this.props.navigation.navigate("CurrentOrder");
       } else {
         alert(
