@@ -151,7 +151,8 @@ class DineInScreen extends Component {
               this.props.navigation.navigate("Customer", {
                 dm: this.state.dm,
                 table: item.TableNo,
-                start: this.state.start
+                start: this.state.start,
+                roomno: 0
               })
             }
           >

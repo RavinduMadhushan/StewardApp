@@ -10,7 +10,8 @@ import {
   TouchableOpacity,
   StyleSheet,
   TouchableHighlight,
-  StatusBar
+  StatusBar,
+  AsyncStorage
 } from "react-native";
 
 class HomeScreen extends Component {
@@ -19,6 +20,17 @@ class HomeScreen extends Component {
     title: "Home",
     header: null
   };
+
+  logout = async () => {
+    try {
+      await AsyncStorage.removeItem("uname");
+      await AsyncStorage.removeItem("currentorder");
+      this.props.navigation.navigate("Login");
+    } catch {
+      alert(error);
+    }
+  };
+
   render() {
     return (
       <ImageBackground
@@ -87,7 +99,7 @@ class HomeScreen extends Component {
         <View style={styles.itemy}>
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => this.props.navigation.navigate("ListItem")}
+            onPress={() => this.props.navigation.navigate("Items")}
           >
             <View style={styles.container}>
               <ImageBackground
@@ -106,10 +118,7 @@ class HomeScreen extends Component {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={() => this.props.navigation.navigate("Item")}
-          >
+          <TouchableOpacity activeOpacity={0.8} onPress={this.logout}>
             <View style={styles.container}>
               <ImageBackground
                 style={{
@@ -122,7 +131,7 @@ class HomeScreen extends Component {
                 }}
                 source={require("../images/Rectangle7.png")}
               >
-                <Text style={styles.sw}>Reports</Text>
+                <Text style={styles.sw}>Logout</Text>
               </ImageBackground>
             </View>
           </TouchableOpacity>

@@ -12,7 +12,11 @@ import { Platform, StyleSheet, Text, View } from "react-native";
 import LoginScreen from "./src/screens/login";
 import SettingsScreen from "./src/screens/settings";
 import SyncScreen from "./src/screens/sync";
-import { createStackNavigator, createSwitchNavigator } from "react-navigation";
+import {
+  createSwitchNavigator,
+  createStackNavigator,
+  createAppContainer
+} from "react-navigation";
 import SplashScreen from "react-native-splash-screen";
 import HomeScreen from "./src/screens/home";
 import BeginOrderScreen from "./src/screens/begin_order";
@@ -28,6 +32,11 @@ import CurrentOrderScreen from "./src/screens/currentorder";
 import CompleteOrderScreen from "./src/screens/complete_order";
 import ItemScreen from "./src/screens/item";
 import CompleteScreen from "./src/screens/complete";
+import AuthLoadingScreen from "./src/screens/authLoading";
+import ItemsScreen from "./src/screens/items";
+import ItemNormalScreen from "./src/screens/itemnormal";
+import RoomNOScreen from "./src/screens/room_no";
+import OrderDesScreen from "./src/screens/orderdes";
 
 export default class App extends Component {
   componentDidMount() {
@@ -38,11 +47,8 @@ export default class App extends Component {
   }
 }
 
-const MainNavigator = createStackNavigator(
+const AppStack = createStackNavigator(
   {
-    Login: LoginScreen,
-    Settings: SettingsScreen,
-    Sync: SyncScreen,
     Home: HomeScreen,
     BeginOrder: BeginOrderScreen,
     Report: ReportScreen,
@@ -58,9 +64,30 @@ const MainNavigator = createStackNavigator(
     CompleteOrder: CompleteOrderScreen,
     Categories: CategoriesScreen,
     Item: ItemScreen,
-    Complete: CompleteScreen
+    Complete: CompleteScreen,
+    Items: ItemsScreen,
+    ItemNormal: ItemNormalScreen,
+    RoomNO: RoomNOScreen,
+    OrderDes: OrderDesScreen
   },
   {
-    initialRouteName: "Login"
+    initialRouteName: "Home"
+  }
+);
+
+const AuthStack = createStackNavigator({
+  Login: LoginScreen,
+  Settings: SettingsScreen,
+  Sync: SyncScreen
+});
+
+const MainNavigator = createSwitchNavigator(
+  {
+    AuthLoading: AuthLoadingScreen,
+    App: AppStack,
+    Auth: AuthStack
+  },
+  {
+    initialRouteName: "AuthLoading"
   }
 );

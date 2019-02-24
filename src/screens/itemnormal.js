@@ -12,7 +12,7 @@ import {
   AsyncStorage
 } from "react-native";
 
-class ItemScreen extends Component {
+class ItemNormalScreen extends Component {
   state = {
     size: "r",
     item: {},
@@ -22,7 +22,7 @@ class ItemScreen extends Component {
     note: ""
   };
   static navigationOptions = {
-    title: "Order",
+    title: "Item",
     headerTintColor: "white",
     headerRight: (
       <Image
@@ -42,15 +42,7 @@ class ItemScreen extends Component {
 
   componentDidMount() {
     try {
-      const { navigation } = this.props;
-      const pax = navigation.getParam("pax", "some default value");
-      const dm = navigation.getParam("dm", "some default value");
-      const table = navigation.getParam("table", "some default value");
-      const phn = navigation.getParam("phn", "some default value");
-      const name = navigation.getParam("name", "some default value");
-      const address = navigation.getParam("address", "some default value");
-      const roomno = navigation.getParam("roomno", "some default value");
-      const item = JSON.parse(navigation.getParam("item", "null"));
+      const item = JSON.parse(this.props.navigation.getParam("item", "null"));
       //alert(JSON.stringify(item));
       this.setState({
         item: item,
@@ -379,55 +371,8 @@ class ItemScreen extends Component {
                   </View>
                 </View>
               </View>
-              <View
-                style={{
-                  backgroundColor: "rgba(52, 52, 52, 0.3)",
-                  padding: 10
-                }}
-              >
-                <Text style={{ fontSize: 15, color: "white", paddingLeft: 15 }}>
-                  Notes
-                </Text>
-                <TextInput
-                  editable={true}
-                  maxLength={40}
-                  style={{
-                    backgroundColor: "white",
-                    borderRadius: 10,
-                    padding: 15,
-                    height: 50,
-                    margin: 15
-                  }}
-                  onChangeText={note => this.setState({ note })}
-                  value={this.state.note}
-                />
-              </View>
             </View>
           </ScrollView>
-        </View>
-        <View
-          style={{
-            flexDirection: "row",
-            borderColor: "grey",
-            borderWidth: 1,
-            backgroundColor: "rgba(52, 52, 52, 0.8)"
-          }}
-        >
-          <TouchableHighlight
-            style={styles.search}
-            onPress={this.viewOrder}
-            underlayColor="#fff"
-          >
-            <Text style={styles.submitText}>View Order</Text>
-          </TouchableHighlight>
-
-          <TouchableHighlight
-            style={styles.search}
-            onPress={this.addOrder}
-            underlayColor="#fff"
-          >
-            <Text style={styles.submitText}>Add to Order</Text>
-          </TouchableHighlight>
         </View>
       </ImageBackground>
     );
@@ -455,4 +400,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ItemScreen;
+export default ItemNormalScreen;

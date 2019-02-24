@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import moment from "moment";
 import {
   View,
   ImageBackground,
@@ -35,6 +36,7 @@ class BeginOrderScreen extends Component {
     }
   };
   render() {
+    let date = moment().format("YYYY-MM-DD h:mm:ss a");
     return (
       <ImageBackground
         source={require("../images/BG.png")}
@@ -51,8 +53,8 @@ class BeginOrderScreen extends Component {
             activeOpacity={0.8}
             onPress={() =>
               this.props.navigation.navigate("Dine", {
-                dm: "dine",
-                start: Date.now()
+                dm: "DINE-IN",
+                start: date
               })
             }
           >
@@ -75,7 +77,14 @@ class BeginOrderScreen extends Component {
 
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => this.props.navigation.navigate("OrderList")}
+            onPress={() =>
+              this.props.navigation.navigate("Customer", {
+                dm: "DELIVERY",
+                start: date,
+                table: 0,
+                roomno: 0
+              })
+            }
           >
             <View style={styles.container}>
               <ImageBackground
@@ -97,7 +106,14 @@ class BeginOrderScreen extends Component {
         <View style={styles.itemy}>
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => this.props.navigation.navigate("ListItem")}
+            onPress={() =>
+              this.props.navigation.navigate("Customer", {
+                dm: "TAKE-AWAY",
+                start: date,
+                table: 0,
+                roomno: 0
+              })
+            }
           >
             <View style={styles.container}>
               <ImageBackground
@@ -118,7 +134,13 @@ class BeginOrderScreen extends Component {
 
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => this.props.navigation.navigate("Report")}
+            onPress={() =>
+              this.props.navigation.navigate("RoomNO", {
+                dm: "ROOM SERVICE",
+                start: date,
+                table: 0
+              })
+            }
           >
             <View style={styles.container}>
               <ImageBackground

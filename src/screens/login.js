@@ -44,12 +44,12 @@ export default class LoginScreen extends Component {
   getUsers = async () => {
     const url = await AsyncStorage.getItem("url");
     if (url == null) {
-      //alert("Please enter the server address before login.");
+      alert("Please enter the server address before login.");
       return;
     } else {
       this.setState({ url: url + "users.aspx" });
     }
-    fetch(this.state.url)
+    await fetch(this.state.url)
       .then(res => res.json())
       .then(res => {
         const response = JSON.stringify(res);
@@ -67,8 +67,8 @@ export default class LoginScreen extends Component {
     }
   };
 
-  login = () => {
-    this.getUsers();
+  login = async () => {
+    await this.getUsers();
     let found = false;
     let user = null;
 
@@ -76,7 +76,6 @@ export default class LoginScreen extends Component {
       if (this.state.users[i].PIN === this.state.pin) {
         user = this.state.users[i];
         this.storeData("uname", JSON.stringify(user));
-
         found = true;
       } else {
       }
@@ -94,8 +93,10 @@ export default class LoginScreen extends Component {
       // _retrieveData();
 
       this.props.navigation.navigate("Home");
+      this.setState({ pin: "" });
     } else {
       alert("Wrong pin entered!");
+      this.setState({ pin: "" });
     }
   };
 

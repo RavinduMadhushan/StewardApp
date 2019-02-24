@@ -25,8 +25,9 @@ class CustomerScreen extends Component {
     const dm = navigation.getParam("dm", "some default value");
     const table = navigation.getParam("table", "some default value");
     const start = navigation.getParam("start", "some default value");
+    const roomno = navigation.getParam("roomno", "some default value");
     //alert(dm);
-    this.setState({ dm: dm, table: table, start: start });
+    this.setState({ dm: dm, table: table, start: start, roomno: roomno });
   }
   static navigationOptions = {
     title: "Customer",
@@ -80,6 +81,7 @@ class CustomerScreen extends Component {
             }}
             onChangeText={phoneno => this.setState({ phoneno })}
             value={this.state.phoneno}
+            autoFocus={true}
           />
           <TextInput
             placeholder="Name"
@@ -122,7 +124,7 @@ class CustomerScreen extends Component {
               name: this.state.name,
               phn: this.state.phoneno,
               address: this.state.address,
-              roomno: ""
+              roomno: this.state.roomno
             })
           }
           underlayColor="#fff"

@@ -11,13 +11,14 @@ import {
   AsyncStorage
 } from "react-native";
 
-class CurrentOrderScreen extends Component {
+class OrderDesScreen extends Component {
   state = {
     items: [],
-    total: ""
+    total: "",
+    no: ""
   };
   static navigationOptions = {
-    title: "Order",
+    title: "Order Desciption",
     headerTintColor: "white",
     headerRight: (
       <Image
@@ -56,7 +57,14 @@ class CurrentOrderScreen extends Component {
   };
 
   componentDidMount() {
-    this._retrieveData();
+    //this._retrieveData();
+
+    const order = this.props.navigation.getParam("order");
+    //alert(JSON.stringify(order.data.items));
+    const items = order.data.items;
+    const no = order.no;
+    this.setState({ items: items, no: no });
+    //alert(JSON.stringify(order));
   }
   _retrieveData = async () => {
     try {
@@ -169,7 +177,7 @@ class CurrentOrderScreen extends Component {
           .then(res => {
             let result = res;
             AsyncStorage.removeItem("currentorder");
-            this.saveOrder(k.OrderHeader[0], result.Order.OrderNo, data);
+            this.saveOrder(k.OrderHeader[0], result.Order.OrderNo);
             this.props.navigation.navigate("Home");
             //alert(JSON.stringify(res.));
           })
@@ -188,7 +196,7 @@ class CurrentOrderScreen extends Component {
     }
   };
 
-  saveOrder = async (order, no, data) => {
+  saveOrder = async (order, no) => {
     try {
       //alert(no);
       const value = await AsyncStorage.getItem("orders");
@@ -199,8 +207,7 @@ class CurrentOrderScreen extends Component {
         let neworder = {
           no: no,
           order: order,
-          name: username,
-          data: data
+          name: username
         };
         let orders = JSON.parse(value);
         orders.push(neworder);
@@ -210,8 +217,7 @@ class CurrentOrderScreen extends Component {
         let neworder = {
           no: no,
           order: order,
-          name: username,
-          data: data
+          name: username
         };
         let orders = [];
         orders.push(neworder);
@@ -246,7 +252,7 @@ class CurrentOrderScreen extends Component {
                 paddingLeft: 5
               }}
             >
-              Current Order
+              {this.state.no}
             </Text>
           </View>
           <ScrollView>
@@ -303,15 +309,6 @@ class CurrentOrderScreen extends Component {
                           {this.getSize(item.size)}
                         </Text>
                       </View>
-                      <TouchableHighlight
-                        style={{ paddingRight: 15, paddingTop: 22 }}
-                        onPress={() => this.onDelete(item)}
-                      >
-                        <Image
-                          style={{ width: 22, height: 22 }}
-                          source={require("../images/trash.png")}
-                        />
-                      </TouchableHighlight>
                     </View>
                     <View
                       style={{
@@ -406,30 +403,6 @@ class CurrentOrderScreen extends Component {
             </View>
           </ScrollView>
         </View>
-        <View
-          style={{
-            flexDirection: "row",
-            borderColor: "grey",
-            borderWidth: 1,
-            backgroundColor: "rgba(52, 52, 52, 0.8)"
-          }}
-        >
-          <TouchableHighlight
-            style={styles.search}
-            onPress={() => this.props.navigation.navigate("ListItem")}
-            underlayColor="#fff"
-          >
-            <Text style={styles.submitText}>Order More</Text>
-          </TouchableHighlight>
-
-          <TouchableHighlight
-            style={styles.search}
-            onPress={this.complete}
-            underlayColor="#fff"
-          >
-            <Text style={styles.submitText}>Complete Order</Text>
-          </TouchableHighlight>
-        </View>
       </ImageBackground>
     );
   }
@@ -456,4 +429,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default CurrentOrderScreen;
+export default OrderDesScreen;

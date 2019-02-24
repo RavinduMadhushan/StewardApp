@@ -11,11 +11,79 @@ import {
   StyleSheet,
   TouchableHighlight,
   StatusBar,
-  AsyncStorage
+  AsyncStorage,
+  BackHandler
 } from "react-native";
 
 class CategoriesScreen extends Component {
-  state = {};
+  state = {
+    cat: [],
+    order: false
+  };
+
+  _didFocusSubscription;
+  _willBlurSubscription;
+
+  constructor(props) {
+    super(props);
+    this._didFocusSubscription = props.navigation.addListener(
+      "didFocus",
+      payload =>
+        BackHandler.addEventListener(
+          "hardwareBackPress",
+          this.onBackButtonPressAndroid
+        )
+    );
+  }
+
+  componentDidMount = () => {
+    this._willBlurSubscription = this.props.navigation.addListener(
+      "willBlur",
+      payload =>
+        BackHandler.removeEventListener(
+          "hardwareBackPress",
+          this.onBackButtonPressAndroid
+        )
+    );
+    this.retrieveData();
+  };
+
+  onBackButtonPressAndroid = () => {
+    if (this.state.order) {
+      alert("You have an unfinished order. Please complete it.");
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  componentWillUnmount() {
+    this._didFocusSubscription && this._didFocusSubscription.remove();
+    this._willBlurSubscription && this._willBlurSubscription.remove();
+  }
+
+  retrieveData = async () => {
+    try {
+      const cat = await AsyncStorage.getItem("basecat");
+      const order = await AsyncStorage.getItem("currentorder");
+      // alert(cat);
+      if (order !== null) {
+        this.setState({ order: true });
+      } else {
+        this.setState({ order: false });
+      }
+      if (cat !== null) {
+        this.setState({
+          cat: JSON.parse(cat)
+        });
+        //alert(JSON.stringify(this.state));
+      } else {
+        this.setState({ cat: [] });
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
 
   static navigationOptions = {
     title: "Main Categories",
@@ -33,7 +101,8 @@ class CategoriesScreen extends Component {
     ),
     headerStyle: {
       backgroundColor: "#ff9800"
-    }
+    },
+    headerLeft: null
   };
 
   onSubmit = type => {
@@ -76,78 +145,31 @@ class CategoriesScreen extends Component {
         }}
       >
         <View>
-          <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={() => this.onSubmit("Breakfast")}
-          >
-            <View style={{ height: 100, borderColor: "grey", borderWidth: 1 }}>
-              <Text
-                style={{
-                  textAlign: "right",
-                  color: "white",
-                  fontSize: 30,
-                  paddingTop: 52,
-                  paddingRight: 10
-                }}
+          {this.state.cat.map(cat => {
+            return (
+              <TouchableOpacity
+                key={cat}
+                activeOpacity={0.8}
+                onPress={() => this.onSubmit(cat)}
               >
-                BREAKFAST
-              </Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={() => this.onSubmit("Lunch")}
-          >
-            <View style={{ height: 100, borderColor: "grey", borderWidth: 1 }}>
-              <Text
-                style={{
-                  textAlign: "right",
-                  color: "white",
-                  fontSize: 30,
-                  paddingTop: 52,
-                  paddingRight: 10
-                }}
-              >
-                LUNCH
-              </Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={() => this.onSubmit("Dinner")}
-          >
-            <View style={{ height: 100, borderColor: "grey", borderWidth: 1 }}>
-              <Text
-                style={{
-                  textAlign: "right",
-                  color: "white",
-                  fontSize: 30,
-                  paddingTop: 52,
-                  paddingRight: 10
-                }}
-              >
-                DINNER
-              </Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={() => this.onSubmit("Wine")}
-          >
-            <View style={{ height: 100, borderColor: "grey", borderWidth: 1 }}>
-              <Text
-                style={{
-                  textAlign: "right",
-                  color: "white",
-                  fontSize: 30,
-                  paddingTop: 52,
-                  paddingRight: 10
-                }}
-              >
-                WINE
-              </Text>
-            </View>
-          </TouchableOpacity>
+                <View
+                  style={{ height: 100, borderColor: "grey", borderWidth: 1 }}
+                >
+                  <Text
+                    style={{
+                      textAlign: "right",
+                      color: "white",
+                      fontSize: 30,
+                      paddingTop: 52,
+                      paddingRight: 10
+                    }}
+                  >
+                    {cat}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            );
+          })}
         </View>
       </ImageBackground>
     );

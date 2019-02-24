@@ -13,12 +13,12 @@ import {
   StatusBar
 } from "react-native";
 
-class NoOfPaxScreen extends Component {
+class RoomNOScreen extends Component {
   state = {
     text: ""
   };
   static navigationOptions = {
-    title: "No of Pax",
+    title: "Room No",
     headerTintColor: "white",
     headerRight: (
       <Image
@@ -39,19 +39,18 @@ class NoOfPaxScreen extends Component {
   onSubmit = () => {
     try {
       const { navigation } = this.props;
-      const pax = parseInt(this.state.text);
-      if (pax == NaN) {
-        return alert("Please enter a correct pax");
+      const roomno = parseInt(this.state.text);
+      if (roomno == NaN || roomno == "") {
+        return alert("Please enter a correct room Number");
       }
       const dm = navigation.getParam("dm", "some default value");
       const table = navigation.getParam("table", "some default value");
       const phn = navigation.getParam("phn", "some default value");
       const name = navigation.getParam("name", "some default value");
       const address = navigation.getParam("address", "some default value");
-      const roomno = navigation.getParam("roomno", "some default value");
+      //   const roomno = navigation.getParam("roomno", "some default value");
       const start = navigation.getParam("start", "some default value");
-      this.props.navigation.navigate("Categories", {
-        pax: pax,
+      this.props.navigation.navigate("Customer", {
         dm: dm,
         table: table,
         phn: phn,
@@ -86,7 +85,7 @@ class NoOfPaxScreen extends Component {
         >
           <TextInput
             keyboardType="numeric"
-            placeholder="No of Pax"
+            placeholder="Room No"
             placeholderTextColor="#ADD8E6"
             textContentType="telephoneNumber"
             autoFocus={true}
@@ -135,4 +134,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default NoOfPaxScreen;
+export default RoomNOScreen;

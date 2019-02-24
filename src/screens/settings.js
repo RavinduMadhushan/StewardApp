@@ -166,7 +166,6 @@ export default class SettingScreen extends Component {
             </Text>
           </TouchableHighlight>
         </View>
-
         <View style={{ margin: 10 }}>
           <Text style={{ color: "white", fontSize: 18 }}>
             POS Center Code :

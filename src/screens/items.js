@@ -13,7 +13,7 @@ import {
   TouchableOpacity
 } from "react-native";
 
-class ListItemScreen extends Component {
+class ItemsScreen extends Component {
   state = {
     selecteditem: "",
     categories: [],
@@ -31,17 +31,12 @@ class ListItemScreen extends Component {
   retrieveData = async () => {
     const itms = await AsyncStorage.getItem("items");
     const items = JSON.parse(itms);
-    const type = this.props.navigation.getParam("type", "some default value");
-    const newitems = items.filter(item => {
-      if (item.BaseCat == type) {
-        return true;
-      }
-    });
+    //alert(JSON.stringify(items));
     if (items !== null) {
       //const tt = [{ SubCat: "a" }, { SubCat: "a" }, { SubCat: "a" }];
 
-      const categories = this.parseCatogeries(newitems);
-      this.setState({ items: newitems, categories: categories });
+      const categories = this.parseCatogeries(items);
+      this.setState({ items: items, categories: categories });
     } else {
       alert("Please sync with the server before placing an order.");
     }
@@ -58,14 +53,13 @@ class ListItemScreen extends Component {
     for (var j = 0; j < categories.length; j++) {
       catstates[categories[j]] = null;
     }
-
     this.setState({ catstates });
     return categories;
   };
 
   static navigationOptions = ({ navigation }) => {
     return {
-      title: navigation.getParam("type", "Meal Type"),
+      title: navigation.getParam("type", "Item List"),
       headerTintColor: "white",
       headerStyle: {
         backgroundColor: "#ff9800"
@@ -100,28 +94,8 @@ class ListItemScreen extends Component {
 
   onItemClick = item => {
     try {
-      const { navigation } = this.props;
-      const pax = navigation.getParam("pax", "some default value");
-      const dm = navigation.getParam("dm", "some default value");
-      const table = navigation.getParam("table", "some default value");
-      const phn = navigation.getParam("phn", "some default value");
-      const name = navigation.getParam("name", "some default value");
-      const address = navigation.getParam("address", "some default value");
-      const roomno = navigation.getParam("roomno", "some default value");
-      const type = navigation.getParam("type", "some default value");
-      const start = navigation.getParam("start", "some default value");
-      navigation.navigate("Item", {
-        pax: pax,
-        dm: dm,
-        table: table,
-        phn: phn,
-        name: name,
-        address: address,
-        roomno: roomno,
-        pax: pax,
-        type: type,
-        item: JSON.stringify(item),
-        start: start
+      this.props.navigation.navigate("ItemNormal", {
+        item: JSON.stringify(item)
       });
     } catch (error) {
       alert(error);
@@ -432,30 +406,6 @@ class ListItemScreen extends Component {
             })}
           </ScrollView>
         </View>
-        <View
-          style={{
-            flexDirection: "row",
-            borderColor: "grey",
-            borderWidth: 1,
-            backgroundColor: "rgba(52, 52, 52, 0.8)"
-          }}
-        >
-          <TouchableHighlight
-            style={styles.searchs}
-            onPress={() => this.props.navigation.navigate("CurrentOrder")}
-            underlayColor="#fff"
-          >
-            <Text style={styles.submitText}>View Order</Text>
-          </TouchableHighlight>
-
-          <TouchableHighlight
-            style={styles.searchs}
-            onPress={this.cancelOrder}
-            underlayColor="#fff"
-          >
-            <Text style={styles.submitText}>Cancel Order</Text>
-          </TouchableHighlight>
-        </View>
       </ImageBackground>
     );
   }
@@ -519,4 +469,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ListItemScreen;
+export default ItemsScreen;

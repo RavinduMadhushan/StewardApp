@@ -27,13 +27,7 @@ export default class SyncScreen extends Component {
       const lastsync = await AsyncStorage.getItem("lastsync");
       const items = await AsyncStorage.getItem("items");
       const tables = await AsyncStorage.getItem("tables");
-      const url = await AsyncStorage.getItem("url");
-      if (url == null) {
-        alert("Please enter the server address before synchronization.");
-        return;
-      } else {
-        this.setState({ url: url });
-      }
+
       if (lastsync !== null) {
         this.setState({
           lastsync: lastsync,
@@ -59,12 +53,14 @@ export default class SyncScreen extends Component {
 
   sync = async () => {
     this.setState({ loading: true });
+    const url = await AsyncStorage.getItem("url");
     try {
-      await fetch(this.state.url + "Items.aspx")
+      await fetch(url + "Items.aspx")
         .then(res => res.json())
         .then(res => {
           this.storeData("items", JSON.stringify(res.SyncData[0].EntityData));
-          fetch(this.state.url + "tables.aspx")
+          this.parseCatogeries(res.SyncData[0].EntityData);
+          fetch(url + "tables.aspx")
             .then(res => res.json())
             .then(res => {
               this.storeData(
@@ -79,7 +75,7 @@ export default class SyncScreen extends Component {
         })
         .catch(error => {
           this.setState({ loading: false });
-          alert("Error happened.");
+          alert(error);
         });
     } catch (error) {
       this.setState({ loading: false });
@@ -104,6 +100,16 @@ export default class SyncScreen extends Component {
         source={require("../images/Orange_Logo.png")}
       />
     )
+  };
+
+  parseCatogeries = items => {
+    const categories = [];
+    for (var i = 0; i < items.length; i++) {
+      if (!categories.includes(items[i].BaseCat)) {
+        categories.push(items[i].BaseCat);
+      }
+    }
+    this.storeData("basecat", JSON.stringify(categories));
   };
 
   render() {
