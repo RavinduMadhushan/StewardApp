@@ -15,7 +15,8 @@ class OrderDesScreen extends Component {
   state = {
     items: [],
     total: "",
-    no: ""
+    no: "",
+    visible: false
   };
   static navigationOptions = {
     title: "Order Desciption",
@@ -34,6 +35,21 @@ class OrderDesScreen extends Component {
     headerStyle: {
       backgroundColor: "#ff9800"
     }
+  };
+  showModal = async () => {
+    try {
+      const value = await AsyncStorage.getItem("OrderList");
+      if (value !== null) {
+        //alert(value);
+        this.setState({ visible: true });
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  closeModal = () => {
+    this.setState({ visible: false });
   };
 
   getTotal = () => {
@@ -402,6 +418,13 @@ class OrderDesScreen extends Component {
               </View>
             </View>
           </ScrollView>
+          <TouchableHighlight
+            style={styles.searchs}
+            // onPress={this.showModal}
+            underlayColor="#fff"
+          >
+            <Text style={styles.submitText}>Void Order</Text>
+          </TouchableHighlight>
         </View>
       </ImageBackground>
     );
@@ -426,6 +449,18 @@ const styles = StyleSheet.create({
     textAlign: "center",
     paddingTop: 5,
     fontSize: 18
+  },
+  searchs: {
+    margin: 15,
+    marginLeft: "26%",
+    paddingTop: 5,
+    paddingBottom: 5,
+    backgroundColor: "#ff9800",
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#fff",
+    width: "45%",
+    height: 45
   }
 });
 

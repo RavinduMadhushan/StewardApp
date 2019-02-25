@@ -44,6 +44,7 @@ class OrderListScreen extends Component {
   _retrieveData = async () => {
     try {
       const value = await AsyncStorage.getItem("orders");
+      // alert(value);
       if (value !== null) {
         orders = JSON.parse(value);
         orders.reverse();
@@ -133,7 +134,7 @@ class OrderListScreen extends Component {
                             paddingLeft: 1
                           }}
                         >
-                          Status: On Preparation
+                          Status: {item.status}
                         </Text>
                         <Text
                           style={{

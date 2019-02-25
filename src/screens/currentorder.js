@@ -200,7 +200,8 @@ class CurrentOrderScreen extends Component {
           no: no,
           order: order,
           name: username,
-          data: data
+          data: data,
+          status: "On Preparation"
         };
         let orders = JSON.parse(value);
         orders.push(neworder);
@@ -211,7 +212,8 @@ class CurrentOrderScreen extends Component {
           no: no,
           order: order,
           name: username,
-          data: data
+          data: data,
+          status: "On Preparation"
         };
         let orders = [];
         orders.push(neworder);
