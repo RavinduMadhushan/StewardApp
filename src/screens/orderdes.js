@@ -38,19 +38,44 @@ class OrderDesScreen extends Component {
     }
   };
   showModal = async () => {
-    try {
-      const value = await AsyncStorage.getItem("OrderList");
-      if (value !== null) {
-        //alert(value);
-        this.setState({ visible: true });
-      }
-    } catch (error) {
-      alert(error);
-    }
+    //alert(value);
+    this.setState({ visible: true });
   };
 
   closeModal = () => {
     this.setState({ visible: false });
+  };
+
+  voidorder = async () => {
+    const val = await AsyncStorage.getItem("orders");
+    const ordersk = JSON.parse(val);
+    // l = JSON.stringify(ordersk);
+    // alert(l);
+    for (let x = 0; x < ordersk.length; x++) {
+      if (ordersk[x].no == this.state.no) {
+        // System.out.println(4 + " does exist.");
+        alert(ordersk[x]);
+      } else {
+        alert("hey");
+      }
+    }
+    // fetch(url + "GetOrder.aspx", {
+    //   method: "POST",
+    //   headers: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json"
+    //   },
+    //   body: JSON.stringify(k)
+    // })
+    //   .then(res => res.json())
+    //   .then(res => {
+    //     let result = res;
+    //     AsyncStorage.removeItem("currentorder");
+    //     this.saveOrder(k.OrderHeader[0], result.Order.OrderNo, data);
+    //     this.props.navigation.navigate("OrderList");
+    //     alert(JSON.stringify(res));
+    //   })
+    //   .catch(err => alert(err));
   };
 
   getTotal = () => {
@@ -81,169 +106,9 @@ class OrderDesScreen extends Component {
     const items = order.data.items;
     const no = order.no;
     this.setState({ items: items, no: no });
+
     //alert(JSON.stringify(order));
   }
-  _retrieveData = async () => {
-    try {
-      const value = await AsyncStorage.getItem("currentorder");
-      if (value !== null) {
-        let data = JSON.parse(value);
-        let items = data.items;
-        this.setState({ items });
-      }
-    } catch (error) {
-      alert(error);
-    }
-  };
-
-  onDelete = async item => {
-    try {
-      const value = await AsyncStorage.getItem("currentorder");
-      if (value !== null) {
-        let data = JSON.parse(value);
-        let items = data.items;
-        let index = this.state.items.indexOf(item);
-
-        items.splice(index, 1);
-        data.items = items;
-        this._storeData("currentorder", JSON.stringify(data));
-        this._retrieveData();
-      }
-    } catch (error) {
-      alert(error);
-    }
-  };
-
-  _storeData = async (key, value) => {
-    try {
-      await AsyncStorage.setItem(key, value);
-    } catch (error) {
-      alert(error);
-    }
-  };
-
-  complete = () => {
-    this._retrievec();
-  };
-
-  _retrievec = async () => {
-    try {
-      const value = await AsyncStorage.getItem("currentorder");
-      const poscode = await AsyncStorage.getItem("poscode");
-      const username = await AsyncStorage.getItem("uname");
-      const upin = JSON.parse(username);
-
-      const pos = poscode;
-      //alert(pos);
-      const data = JSON.parse(value);
-
-      // const sdate = new Date(data.start);
-      // let smonth = sdate.getMonth();
-      // let sday = sdate.getDate();
-      // let skay = sdate.toLocaleTimeString();
-      // let syear = sdate.getFullYear();
-
-      let date = moment().format("YYYY-MM-DD h:mm:ss a");
-
-      // let month = date.getMonth();
-      // let day = date.getDate();
-      // let kay = date.toLocaleTimeString();
-      // let year = date.getFullYear();
-      // console.log(year + "-" + month + "-" + day + " " + kay);
-      const items = data.items;
-      const newitems = [];
-      for (let i = 0; i < items.length; i++) {
-        newitems.push({
-          ItemCode: items[i].itemcode,
-          Qty: items[i].amount,
-          Size: this.getSize(items[i].size),
-          Notes: items[i].note
-        });
-      }
-
-      if (value !== null) {
-        const k = {
-          OrderHeader: [
-            {
-              POSCenterCode: pos,
-              UserPIN: upin.PIN,
-              OrderStartAt: data.start,
-              OrderEndAt: date,
-              PhoneNo: data.phn,
-              Name: data.name,
-              Address: data.address,
-              DeliveryMtd: data.dm,
-              TableNo: data.table,
-              RoomNo: data.roomno,
-              NoOfPax: data.pax,
-              ItemDtl: newitems
-            }
-          ]
-        };
-        // await alert(JSON.stringify(k));
-        const url = await AsyncStorage.getItem("url");
-        fetch(url + "GetOrder.aspx", {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(k)
-        })
-          .then(res => res.json())
-          .then(res => {
-            let result = res;
-            AsyncStorage.removeItem("currentorder");
-            this.saveOrder(k.OrderHeader[0], result.Order.OrderNo);
-            this.props.navigation.navigate("Home");
-            //alert(JSON.stringify(res.));
-          })
-          .catch(err => alert(err));
-      }
-    } catch (error) {
-      alert(error);
-    }
-  };
-
-  storeOrders = async (key, value) => {
-    try {
-      await AsyncStorage.setItem(key, value);
-    } catch (error) {
-      alert(error);
-    }
-  };
-
-  saveOrder = async (order, no) => {
-    try {
-      //alert(no);
-      const value = await AsyncStorage.getItem("orders");
-      const user = await AsyncStorage.getItem("uname");
-      const username = JSON.parse(user).UserName;
-      //alert(username);
-      if (value !== null) {
-        let neworder = {
-          no: no,
-          order: order,
-          name: username
-        };
-        let orders = JSON.parse(value);
-        orders.push(neworder);
-        //alert(JSON.stringify(neworder));
-        this.storeOrders("orders", JSON.stringify(orders));
-      } else {
-        let neworder = {
-          no: no,
-          order: order,
-          name: username
-        };
-        let orders = [];
-        orders.push(neworder);
-        this.storeOrders("orders", JSON.stringify(orders));
-      }
-    } catch (error) {
-      alert(error);
-    }
-  };
 
   render() {
     return (
@@ -293,7 +158,7 @@ class OrderDesScreen extends Component {
                   }}
                 >
                   <TouchableHighlight
-                    // onPress={this.cancelOrder}
+                    onPress={this.voidorder}
                     style={{
                       backgroundColor: "#68a0cf",
                       borderRadius: 10,
