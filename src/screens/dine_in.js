@@ -124,11 +124,11 @@ class DineInScreen extends Component {
                 dm: this.state.dm,
                 table: item.TableNo,
                 start: this.state.start,
-                phn: "",
-                name: "",
-                address: "",
-                roomno: "",
-                pax: ""
+                phn: "0000",
+                name: "no-name",
+                address: "no-address",
+                roomno: 0,
+                pax: 0
               })
             }
           >

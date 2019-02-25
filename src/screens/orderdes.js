@@ -49,33 +49,55 @@ class OrderDesScreen extends Component {
   voidorder = async () => {
     const val = await AsyncStorage.getItem("orders");
     const ordersk = JSON.parse(val);
+    const pos = await AsyncStorage.getItem("poscode");
+    const username = await AsyncStorage.getItem("uname");
+    const upin = JSON.parse(username).PIN;
     // l = JSON.stringify(ordersk);
     // alert(l);
+
     for (let x = 0; x < ordersk.length; x++) {
       if (ordersk[x].no == this.state.no) {
         // System.out.println(4 + " does exist.");
-        alert(ordersk[x]);
-      } else {
-        alert("hey");
+        //aleJSON.stringify(ordersk[x]));
+        if (ordersk[x].status == "canceled") {
+          this.setState({ visible: false });
+          return alert("This order is already canceled.");
+        }
+        k = {
+          voidorder: [
+            {
+              POSCenterCode: pos,
+              UserPIN: upin,
+              orderno: this.state.no
+            }
+          ]
+        };
+        //alert(JSON.stringify(k));
+        const url = await AsyncStorage.getItem("url");
+        fetch(url + "VoidOrder.aspx", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(k)
+        })
+          .then(res => res.json())
+          .then(res => {
+            let result = res;
+
+            //alert(JSON.stringify(res));
+            ordersk[x].status = "canceled";
+            AsyncStorage.setItem("orders", JSON.stringify(ordersk));
+            this.setState({ visible: false });
+            this.props.navigation.pop();
+          })
+          .catch(err => {
+            this.setState({ visible: false });
+            alert(err);
+          });
       }
     }
-    // fetch(url + "GetOrder.aspx", {
-    //   method: "POST",
-    //   headers: {
-    //     Accept: "application/json",
-    //     "Content-Type": "application/json"
-    //   },
-    //   body: JSON.stringify(k)
-    // })
-    //   .then(res => res.json())
-    //   .then(res => {
-    //     let result = res;
-    //     AsyncStorage.removeItem("currentorder");
-    //     this.saveOrder(k.OrderHeader[0], result.Order.OrderNo, data);
-    //     this.props.navigation.navigate("OrderList");
-    //     alert(JSON.stringify(res));
-    //   })
-    //   .catch(err => alert(err));
   };
 
   getTotal = () => {
