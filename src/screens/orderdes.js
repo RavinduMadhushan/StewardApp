@@ -8,7 +8,8 @@ import {
   Image,
   StyleSheet,
   ScrollView,
-  AsyncStorage
+  AsyncStorage,
+  Modal
 } from "react-native";
 
 class OrderDesScreen extends Component {
@@ -253,6 +254,85 @@ class OrderDesScreen extends Component {
           height: "100%"
         }}
       >
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={this.state.visible}
+          onRequestClose={() => {
+            // Alert.alert("Modal has been closed.");
+          }}
+          style={{ margin: 20 }}
+        >
+          <View
+            style={{
+              flex: 1,
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: "rgba(80,80,80,0.8)"
+            }}
+          >
+            <View
+              style={{
+                width: 300,
+                backgroundColor: "#fff"
+              }}
+            >
+              <Text style={{ margin: 15 }}>Are you sure cancel order?</Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginBottom: 15
+                }}
+              >
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center"
+                  }}
+                >
+                  <TouchableHighlight
+                    // onPress={this.cancelOrder}
+                    style={{
+                      backgroundColor: "#68a0cf",
+                      borderRadius: 10,
+                      borderWidth: 1,
+                      borderColor: "#fff",
+                      width: 80
+                    }}
+                  >
+                    <Text style={{ textAlign: "center", fontSize: 18 }}>
+                      Yes
+                    </Text>
+                  </TouchableHighlight>
+                </View>
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center"
+                  }}
+                >
+                  <TouchableHighlight
+                    onPress={this.closeModal}
+                    style={{
+                      backgroundColor: "#68a0cf",
+                      borderRadius: 10,
+                      borderWidth: 1,
+                      borderColor: "#fff",
+                      width: 80
+                    }}
+                  >
+                    <Text style={{ textAlign: "center", fontSize: 18 }}>
+                      No
+                    </Text>
+                  </TouchableHighlight>
+                </View>
+              </View>
+            </View>
+          </View>
+        </Modal>
         <View style={{ flex: 1, flexDirection: "column" }}>
           <View
             style={{
@@ -420,7 +500,7 @@ class OrderDesScreen extends Component {
           </ScrollView>
           <TouchableHighlight
             style={styles.searchs}
-            // onPress={this.showModal}
+            onPress={this.showModal}
             underlayColor="#fff"
           >
             <Text style={styles.submitText}>Void Order</Text>
