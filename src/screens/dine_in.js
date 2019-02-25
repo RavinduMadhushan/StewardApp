@@ -120,10 +120,15 @@ class DineInScreen extends Component {
           <TouchableOpacity
             activeOpacity={0.8}
             onPress={() =>
-              this.props.navigation.navigate("Customer", {
+              this.props.navigation.navigate("Categories", {
                 dm: this.state.dm,
                 table: item.TableNo,
-                start: this.state.start
+                start: this.state.start,
+                phn: "",
+                name: "",
+                address: "",
+                roomno: "",
+                pax: ""
               })
             }
           >
