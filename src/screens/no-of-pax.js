@@ -48,7 +48,7 @@ class NoOfPaxScreen extends Component {
       const phn = navigation.getParam("phn", "some default value");
       const name = navigation.getParam("name", "some default value");
       const address = navigation.getParam("address", "some default value");
-      const roomno = navigation.getParam("roomno", "some default value");
+      const roomno = navigation.getParam("roomno", "0");
       const start = navigation.getParam("start", "some default value");
       this.props.navigation.navigate("Categories", {
         pax: pax,
