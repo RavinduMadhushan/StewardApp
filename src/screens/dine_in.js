@@ -48,13 +48,13 @@ class DineInScreen extends Component {
       });
   };
 
-  // reverseArr = input => {
-  //   var ret = new Array();
-  //   for (var i = input.length - 1; i >= 0; i--) {
-  //     ret.push(input[i]);
-  //   }
-  //   alert(ret);
-  // };
+  reverseArr = input => {
+    var ret = new Array();
+    for (var i = input.length - 1; i >= 0; i--) {
+      ret.push(input[i]);
+    }
+    return ret;
+  };
 
   static navigationOptions = {
     title: "TABLES ",
@@ -77,6 +77,7 @@ class DineInScreen extends Component {
 
   formatData = (data, numColumns) => {
     // this.reverseArr(JSON.stringify(data));
+    data = data.slice().reverse();
 
     const numberOfFullRows = Math.floor(data.length / numColumns);
 
@@ -88,8 +89,9 @@ class DineInScreen extends Component {
       data.push({ key: `blank-${numberOfElementsLastRow}`, empty: true });
       numberOfElementsLastRow++;
     }
+    // this.reverseArr(data);
     // alert(JSON.stringify(data));
-    data = data.reverse();
+
     return data;
   };
 

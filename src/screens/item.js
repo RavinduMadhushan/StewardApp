@@ -186,7 +186,7 @@ class ItemScreen extends Component {
     try {
       const value = await AsyncStorage.getItem("currentorder");
       if (value !== null) {
-        alert(value);
+        //alert(value);
         this.props.navigation.navigate("CurrentOrder");
       } else {
         alert(

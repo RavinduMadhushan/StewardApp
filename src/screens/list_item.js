@@ -10,7 +10,8 @@ import {
   Image,
   ScrollView,
   AsyncStorage,
-  TouchableOpacity
+  TouchableOpacity,
+  Modal
 } from "react-native";
 
 class ListItemScreen extends Component {
@@ -21,7 +22,8 @@ class ListItemScreen extends Component {
     searching: null,
     catstates: {},
     searchquery: "",
-    searchresults: []
+    searchresults: [],
+    visible: false
   };
 
   componentDidMount() {
@@ -91,11 +93,30 @@ class ListItemScreen extends Component {
   };
   cancelOrder = async () => {
     try {
+      this.setState({ visible: false });
       await AsyncStorage.removeItem("currentorder");
       this.props.navigation.navigate("Home");
     } catch (error) {
       alert(error);
     }
+  };
+
+  showModal = async () => {
+    try {
+      const value = await AsyncStorage.getItem("currentorder");
+      if (value !== null) {
+        //alert(value);
+        this.setState({ visible: true });
+      } else {
+        alert("No order recorded to cancel.");
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  closeModal = () => {
+    this.setState({ visible: false });
   };
 
   onItemClick = item => {
@@ -157,6 +178,26 @@ class ListItemScreen extends Component {
       }
     }
     return results;
+  };
+
+  viewOrder = () => {
+    this.tretrieveData();
+  };
+
+  tretrieveData = async () => {
+    try {
+      const value = await AsyncStorage.getItem("currentorder");
+      if (value !== null) {
+        //alert(value);
+        this.props.navigation.navigate("CurrentOrder");
+      } else {
+        alert(
+          "No previous items in the order. please add items to view order."
+        );
+      }
+    } catch (error) {
+      alert(error);
+    }
   };
 
   render() {
@@ -268,7 +309,7 @@ class ListItemScreen extends Component {
           >
             <TouchableHighlight
               style={styles.searchs}
-              onPress={() => this.props.navigation.navigate("CurrentOrder")}
+              onPress={this.viewOrder}
               underlayColor="#fff"
             >
               <Text style={styles.submitText}>View Order</Text>
@@ -276,7 +317,7 @@ class ListItemScreen extends Component {
 
             <TouchableHighlight
               style={styles.searchs}
-              onPress={this.cancelOrder}
+              onPress={this.showModal}
               underlayColor="#fff"
             >
               <Text style={styles.submitText}>Cancel Order</Text>
@@ -293,6 +334,86 @@ class ListItemScreen extends Component {
           height: "100%"
         }}
       >
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={this.state.visible}
+          onRequestClose={() => {
+            //Alert.alert("Modal has been closed.");
+          }}
+          style={{ margin: 20 }}
+        >
+          <View
+            style={{
+              flex: 1,
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: "rgba(80,80,80,0.8)"
+            }}
+          >
+            <View
+              style={{
+                width: 300,
+                backgroundColor: "#fff"
+              }}
+            >
+              <Text style={{ margin: 15 }}>Are you sure cancel order?</Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginBottom: 15
+                }}
+              >
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center"
+                  }}
+                >
+                  <TouchableHighlight
+                    onPress={this.cancelOrder}
+                    style={{
+                      backgroundColor: "#68a0cf",
+                      borderRadius: 10,
+                      borderWidth: 1,
+                      borderColor: "#fff",
+                      width: 80
+                    }}
+                  >
+                    <Text style={{ textAlign: "center", fontSize: 18 }}>
+                      Yes
+                    </Text>
+                  </TouchableHighlight>
+                </View>
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center"
+                  }}
+                >
+                  <TouchableHighlight
+                    onPress={this.closeModal}
+                    style={{
+                      backgroundColor: "#68a0cf",
+                      borderRadius: 10,
+                      borderWidth: 1,
+                      borderColor: "#fff",
+                      width: 80
+                    }}
+                  >
+                    <Text style={{ textAlign: "center", fontSize: 18 }}>
+                      No
+                    </Text>
+                  </TouchableHighlight>
+                </View>
+              </View>
+            </View>
+          </View>
+        </Modal>
+
         <View
           style={{ flex: 1, flexDirection: "column", alignItems: "stretch" }}
         >
@@ -442,7 +563,7 @@ class ListItemScreen extends Component {
         >
           <TouchableHighlight
             style={styles.searchs}
-            onPress={() => this.props.navigation.navigate("CurrentOrder")}
+            onPress={this.viewOrder}
             underlayColor="#fff"
           >
             <Text style={styles.submitText}>View Order</Text>
@@ -450,7 +571,7 @@ class ListItemScreen extends Component {
 
           <TouchableHighlight
             style={styles.searchs}
-            onPress={this.cancelOrder}
+            onPress={this.showModal}
             underlayColor="#fff"
           >
             <Text style={styles.submitText}>Cancel Order</Text>
