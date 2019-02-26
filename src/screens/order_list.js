@@ -15,6 +15,8 @@ import {
 } from "react-native";
 
 class OrderListScreen extends Component {
+  focusListner;
+
   static navigationOptions = {
     title: "Order List",
     headerTintColor: "white",
@@ -37,9 +39,17 @@ class OrderListScreen extends Component {
     orders: []
   };
 
-  componentDidMount = () => {
+  focusListner = this.props.navigation.addListener("didFocus", () => {
+    // Update your data
     this._retrieveData();
-  };
+  });
+
+  componentWillUnmount() {
+    // remove event listener
+    this.focusListner.remove();
+  }
+
+  componentDidMount = () => {};
 
   _retrieveData = async () => {
     try {

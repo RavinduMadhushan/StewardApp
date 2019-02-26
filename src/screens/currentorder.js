@@ -167,15 +167,12 @@ class CurrentOrderScreen extends Component {
           },
           body: JSON.stringify(k)
         })
-          .then(res => {
-            res.json();
-            //alert(JSON.stringify(res));
-          })
+          .then(res => res.json())
           .then(res => {
             let result = res;
             AsyncStorage.removeItem("currentorder");
-            //this.saveOrder(k.OrderHeader[0], result.Order.OrderNo, data);
-            //this.props.navigation.navigate("Home");
+            this.saveOrder(k.OrderHeader[0], result.Order.OrderNo, data);
+            this.props.navigation.navigate("Home");
             //alert(JSON.stringify(res));
           })
           .catch(err => alert(err));

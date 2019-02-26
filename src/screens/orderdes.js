@@ -90,7 +90,7 @@ class OrderDesScreen extends Component {
             ordersk[x].status = "canceled";
             AsyncStorage.setItem("orders", JSON.stringify(ordersk));
             this.setState({ visible: false });
-            this.props.navigation.pop();
+            this.props.navigation.navigate("OrderList");
           })
           .catch(err => {
             this.setState({ visible: false });
