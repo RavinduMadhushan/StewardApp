@@ -110,6 +110,7 @@ class CurrentOrderScreen extends Component {
 
       const pos = poscode;
       //alert(pos);
+      //alert(value);
       const data = JSON.parse(value);
 
       // const sdate = new Date(data.start);
@@ -155,6 +156,7 @@ class CurrentOrderScreen extends Component {
             }
           ]
         };
+        //alert(JSON.stringify(k));
         // await alert(JSON.stringify(k));
         const url = await AsyncStorage.getItem("url");
         fetch(url + "GetOrder.aspx", {
@@ -171,12 +173,12 @@ class CurrentOrderScreen extends Component {
             AsyncStorage.removeItem("currentorder");
             this.saveOrder(k.OrderHeader[0], result.Order.OrderNo, data);
             this.props.navigation.navigate("Home");
-            alert(JSON.stringify(res));
+            // alert(JSON.stringify(res));
           })
           .catch(err => alert(err));
       }
     } catch (error) {
-      alert(error);
+      //alert(error);
     }
   };
 
