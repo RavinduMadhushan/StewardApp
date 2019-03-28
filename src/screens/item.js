@@ -83,7 +83,6 @@ class ItemScreen extends Component {
 
   onMinusClick = () => {
     let amount = parseInt(this.state.amount);
-    if (amount == 0) return;
     amount--;
     let price = parseInt(this.state.price) * amount;
     this.setState({ amount: amount, total: price });
@@ -120,7 +119,8 @@ class ItemScreen extends Component {
               size: this.state.size,
               note: this.state.note,
               price: this.state.price,
-              name: this.state.item.ItemName
+              name: this.state.item.ItemName,
+              des: this.state.item.Description
             }
           ]
         };
@@ -148,7 +148,8 @@ class ItemScreen extends Component {
           size: this.state.size,
           note: this.state.note,
           price: this.state.price,
-          name: this.state.item.ItemName
+          name: this.state.item.ItemName,
+          des: this.state.item.Description
         });
         this._storeData("currentorder", JSON.stringify(currentorders));
         alert("Items successfully added to the order.");

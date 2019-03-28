@@ -144,33 +144,35 @@ class CategoriesScreen extends Component {
           flexDirection: "column"
         }}
       >
-        <View>
-          {this.state.cat.map(cat => {
-            return (
-              <TouchableOpacity
-                key={cat}
-                activeOpacity={0.8}
-                onPress={() => this.onSubmit(cat)}
-              >
-                <View
-                  style={{ height: 100, borderColor: "grey", borderWidth: 1 }}
+        <ScrollView>
+          <View>
+            {this.state.cat.map(cat => {
+              return (
+                <TouchableOpacity
+                  key={cat}
+                  activeOpacity={0.8}
+                  onPress={() => this.onSubmit(cat)}
                 >
-                  <Text
-                    style={{
-                      textAlign: "right",
-                      color: "white",
-                      fontSize: 30,
-                      paddingTop: 52,
-                      paddingRight: 10
-                    }}
+                  <View
+                    style={{ height: 100, borderColor: "grey", borderWidth: 1 }}
                   >
-                    {cat}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            );
-          })}
-        </View>
+                    <Text
+                      style={{
+                        textAlign: "right",
+                        color: "white",
+                        fontSize: 30,
+                        paddingTop: 52,
+                        paddingRight: 10
+                      }}
+                    >
+                      {cat}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+        </ScrollView>
       </ImageBackground>
     );
   }

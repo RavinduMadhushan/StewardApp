@@ -250,7 +250,6 @@ class OrderDesScreen extends Component {
                   <View style={{ flexDirection: "column" }}>
                     <View
                       style={{
-                        height: 75,
                         borderColor: "grey",
                         borderWidth: 1,
                         flexDirection: "row",
@@ -278,6 +277,16 @@ class OrderDesScreen extends Component {
                           }}
                         >
                           {item.name}
+                        </Text>
+                        <Text
+                          style={{
+                            color: "white",
+                            fontSize: 15,
+                            paddingTop: 3,
+                            paddingLeft: 20
+                          }}
+                        >
+                          {item.des}
                         </Text>
                       </View>
                       <View style={{ flex: 1, flexDirection: "column" }}>

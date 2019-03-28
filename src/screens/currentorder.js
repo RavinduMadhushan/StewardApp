@@ -89,6 +89,48 @@ class CurrentOrderScreen extends Component {
     }
   };
 
+  onIncrement = async item => {
+    try {
+      const value = await AsyncStorage.getItem("currentorder");
+      if (value !== null) {
+        let data = JSON.parse(value);
+        let items = data.items;
+        let index = this.state.items.indexOf(item);
+
+        let currentvalue = parseInt(items[index].amount);
+        let newvalue = currentvalue + 1;
+
+        data.items[index].amount = newvalue;
+        //alert(JSON.stringify(newvalue));
+        this._storeData("currentorder", JSON.stringify(data));
+        this._retrieveData();
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  onDecrement = async item => {
+    try {
+      const value = await AsyncStorage.getItem("currentorder");
+      if (value !== null) {
+        let data = JSON.parse(value);
+        let items = data.items;
+        let index = this.state.items.indexOf(item);
+
+        let currentvalue = parseInt(items[index].amount);
+        let newvalue = currentvalue - 1;
+
+        data.items[index].amount = newvalue;
+        //alert(JSON.stringify(newvalue));
+        this._storeData("currentorder", JSON.stringify(data));
+        this._retrieveData();
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
+
   _storeData = async (key, value) => {
     try {
       await AsyncStorage.setItem(key, value);
@@ -133,7 +175,9 @@ class CurrentOrderScreen extends Component {
           ItemCode: items[i].itemcode,
           Qty: items[i].amount,
           Size: this.getSize(items[i].size),
-          Notes: items[i].note
+          Notes: items[i].note,
+          name: items[i].name,
+          des: items[i].des
         });
       }
 
@@ -265,7 +309,6 @@ class CurrentOrderScreen extends Component {
                   <View style={{ flexDirection: "column" }}>
                     <View
                       style={{
-                        height: 75,
                         borderColor: "grey",
                         borderWidth: 1,
                         flexDirection: "row",
@@ -277,8 +320,8 @@ class CurrentOrderScreen extends Component {
                         <Text
                           style={{
                             color: "white",
-                            fontSize: 24,
-                            paddingTop: 10,
+                            fontSize: 20,
+                            paddingTop: 6,
                             paddingLeft: 20
                           }}
                         >
@@ -293,6 +336,17 @@ class CurrentOrderScreen extends Component {
                           }}
                         >
                           {item.name}
+                        </Text>
+                        <Text
+                          style={{
+                            color: "white",
+                            fontSize: 14,
+                            paddingTop: 3,
+                            paddingLeft: 20,
+                            paddingBottom: 2
+                          }}
+                        >
+                          {item.des}
                         </Text>
                       </View>
                       <View style={{ flex: 1, flexDirection: "column" }}>
@@ -328,12 +382,21 @@ class CurrentOrderScreen extends Component {
                       }}
                     >
                       <View style={{ flex: 1, flexDirection: "row" }}>
+                        <TouchableHighlight
+                          style={{ paddingTop: 5, paddingLeft: 20 }}
+                          onPress={() => this.onIncrement(item)}
+                        >
+                          <Image
+                            style={{ width: 20, height: 20 }}
+                            source={require("../images/plus.png")}
+                          />
+                        </TouchableHighlight>
                         <View
                           style={{
                             backgroundColor: "white",
                             width: 30,
                             height: 30,
-                            marginLeft: 30,
+                            marginLeft: 12,
                             borderRadius: 3,
                             marginRight: 12
                           }}
@@ -342,6 +405,15 @@ class CurrentOrderScreen extends Component {
                             {item.amount}
                           </Text>
                         </View>
+                        <TouchableHighlight
+                          style={{ paddingTop: 5 }}
+                          onPress={() => this.onDecrement(item)}
+                        >
+                          <Image
+                            style={{ width: 20, height: 20 }}
+                            source={require("../images/minus.png")}
+                          />
+                        </TouchableHighlight>
                       </View>
                       <View style={{ flex: 1 }}>
                         <Text

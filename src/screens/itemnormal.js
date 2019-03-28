@@ -43,13 +43,14 @@ class ItemNormalScreen extends Component {
   componentDidMount() {
     try {
       const item = JSON.parse(this.props.navigation.getParam("item", "null"));
-      //alert(JSON.stringify(item));
+      alert(JSON.stringify(item));
       this.setState({
         item: item,
         price: item.dblRegPrice,
         amount: 1,
         total: item.dblRegPrice
       });
+      //alert(JSON.stringify(this.state));
       /* this.props.navigation.navigate("ListItem", {
           pax: pax,
           dm: dm,
@@ -79,87 +80,6 @@ class ItemNormalScreen extends Component {
     amount--;
     let price = parseInt(this.state.price) * amount;
     this.setState({ amount: amount, total: price });
-  };
-
-  addOrder = async () => {
-    const { navigation } = this.props;
-    const start = navigation.getParam("start", "some default value");
-    const pax = navigation.getParam("pax", "some default value");
-    const dm = navigation.getParam("dm", "some default value");
-    const table = navigation.getParam("table", "some default value");
-    const phn = navigation.getParam("phn", "some default value");
-    const name = navigation.getParam("name", "some default value");
-    const address = navigation.getParam("address", "some default value");
-    const roomno = navigation.getParam("roomno", "some default value");
-    const type = navigation.getParam("type", "some default value");
-    try {
-      const value = await AsyncStorage.getItem("currentorder");
-      if (value == null) {
-        let currentorder = {
-          start: start,
-          end: Date.now(),
-          phn: phn,
-          name: name,
-          address: address,
-          dm: dm,
-          table: table,
-          roomno: roomno,
-          pax: pax,
-          items: [
-            {
-              itemcode: this.state.item.ItemNo,
-              amount: this.state.amount,
-              size: this.state.size,
-              note: this.state.note,
-              price: this.state.price,
-              name: this.state.item.ItemName
-            }
-          ]
-        };
-        this._storeData("currentorder", JSON.stringify(currentorder));
-        alert("Items successfully added to the order.");
-        this.props.navigation.navigate("ListItem", {
-          pax: pax,
-          dm: dm,
-          table: table,
-          phn: phn,
-          name: name,
-          address: address,
-          roomno: roomno,
-          pax: pax,
-          type: type,
-          start: start
-        });
-      } else {
-        let currentorders = JSON.parse(value);
-        //alert(currentorders.items.length);
-        let items = currentorders.items;
-        items.push({
-          itemcode: this.state.item.ItemNo,
-          amount: this.state.amount,
-          size: this.state.size,
-          note: this.state.note,
-          price: this.state.price,
-          name: this.state.item.ItemName
-        });
-        this._storeData("currentorder", JSON.stringify(currentorders));
-        alert("Items successfully added to the order.");
-        this.props.navigation.navigate("ListItem", {
-          pax: pax,
-          dm: dm,
-          table: table,
-          phn: phn,
-          name: name,
-          address: address,
-          roomno: roomno,
-          pax: pax,
-          type: type,
-          start: start
-        });
-      }
-    } catch (error) {
-      alert(error);
-    }
   };
 
   _storeData = async (key, value) => {

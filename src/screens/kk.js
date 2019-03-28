@@ -215,6 +215,7 @@ class CurrentOrderScreen extends Component {
                         </Text>
                       </View>
                     </View>
+                  
                   </View>
                 );
               })}
