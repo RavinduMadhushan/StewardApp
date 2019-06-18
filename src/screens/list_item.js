@@ -41,7 +41,7 @@ class ListItemScreen extends Component {
     });
     if (items !== null) {
       //const tt = [{ SubCat: "a" }, { SubCat: "a" }, { SubCat: "a" }];
-
+      alert(JSON.stringify(newitems));
       const categories = this.parseCatogeries(newitems);
       this.setState({ items: newitems, categories: categories });
     } else {
@@ -252,7 +252,6 @@ class ListItemScreen extends Component {
                 <View key={item.ItemNo}>
                   <View
                     style={{
-                      height: 75,
                       borderColor: "grey",
                       borderWidth: 1,
                       flexDirection: "row",
@@ -281,6 +280,17 @@ class ListItemScreen extends Component {
                         }}
                       >
                         {item.ItemName}
+                      </Text>
+                      <Text
+                        style={{
+                          color: "white",
+                          fontSize: 15,
+                          paddingTop: 3,
+                          paddingLeft: 40,
+                          paddingBottom: 3
+                        }}
+                      >
+                        {item.Description}
                       </Text>
                     </View>
 
@@ -499,7 +509,6 @@ class ListItemScreen extends Component {
                             <View key={item.ItemNo}>
                               <View
                                 style={{
-                                  height: 75,
                                   borderColor: "grey",
                                   borderWidth: 1,
                                   flexDirection: "row",
@@ -531,6 +540,17 @@ class ListItemScreen extends Component {
                                   >
                                     {item.ItemName}
                                   </Text>
+                                  <Text
+                                    style={{
+                                      color: "white",
+                                      fontSize: 15,
+                                      paddingTop: 3,
+                                      paddingLeft: 40,
+                                      paddingBottom: 3
+                                    }}
+                                  >
+                                    {item.Description}
+                                  </Text>
                                 </View>
 
                                 <TouchableHighlight
@@ -549,7 +569,8 @@ class ListItemScreen extends Component {
                       })}
                   </View>
                 </TouchableOpacity>
-              );
+             
+             );
             })}
           </ScrollView>
         </View>
