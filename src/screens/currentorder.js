@@ -217,7 +217,6 @@ class CurrentOrderScreen extends Component {
             AsyncStorage.removeItem("currentorder");
             this.saveOrder(k.OrderHeader[0], result.Order.OrderNo, data);
             this.props.navigation.navigate("Home");
-            //alert(JSON.stringify(res));
           })
           .catch(err => alert(err));
       }
